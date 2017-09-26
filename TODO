@@ -1,0 +1,6 @@
+
+# In "neutral-sinescape-II.scd"
+
+- SynthDefs do not load before remaining code execution
+    - this could cause problems on new systems
+    - also means that synthdef changes will not occur until the _2nd_ time running the composition.
