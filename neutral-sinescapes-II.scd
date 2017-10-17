@@ -146,7 +146,7 @@ f = { |msg, time, addr|
   if((msg[0] != '/status.reply') && (msg[0] != '/citygram/time') && (msg[0] != '/citygram/endPacket'),{
     var msgStr = msg[0].asCompileString; // stringify
 
-		// msgStr.split($/).drop(1)[1].postln;
+		msgStr.split($/).drop(1)[1].postln;
 
 	// sort the features, then sort min, avg, max
 	if (msgStr.find("FD_SpectralFlatness").isNil,{
@@ -175,7 +175,7 @@ f = { |msg, time, addr|
 
 	  numOfNodes[bufferIdxWrite] = cntNodes;
 
-	  //numOfNodes.copyRange(0, numOfNodes[0]).postln;
+	  numOfNodes.copyRange(0, numOfNodes[0]).postln;
 	  ("num of nodes: " ++ cntNodes).postln;
 	  cntNodes = 0;
 
