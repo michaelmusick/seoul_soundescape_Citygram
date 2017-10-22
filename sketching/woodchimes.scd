@@ -63,9 +63,12 @@ Pdef(\woodchimes,
 		Pseq([1, -1], inf),
 
 		),
+		\type, Pwrand([\note, \rest], [0.5, 0.5], inf),
 		\sustain, 1,
 		// \db, Pexprand( -24, -1, inf)
-		\db, Pbrown( -24, -1, 0.5, inf)
+		\db, Pbrown( -24, -9, 0.5, inf)
 	)
 ).play;
 )
+
+
