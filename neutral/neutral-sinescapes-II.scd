@@ -10,10 +10,12 @@
 
 
 OSCdef(\synthDropsUpdate, {
+	|msg, time, addr|
 	var density = 1;
+	var ptr = msg[1];
 
-	if( ~cgGroupData[(~dataPtr-1)%~cgGroupData.size][\TD_RMS][\avg].notNil, {
-		density = ~cgGroupData[(~dataPtr-1)%~cgGroupData.size][\TD_RMS][\avg];
+	if( ~cgGroupData[ptr][\TD_RMS][\avg].notNil, {
+		density = ~cgGroupData[ptr][\TD_RMS][\avg];
 		// ("rms: " + density).postln;
 		density = density + 1;
 		density = density.explin(1,2,0.1,100);
@@ -52,7 +54,8 @@ SynthDef.new("Sinescape",
 					[resBwr, resBwr*2, resBwr*3],
 					[resMult, resMult/2, resMult/3])})
 		);
-
+		sig = Mix(sig);
+		sig = Pan2.ar(sig, 0);
 		// sound ouput
 		Out.ar(outBus, sig*direct*ampMaster);
 		Out.ar(effectBus, sig*(1-direct)*ampMaster);
@@ -68,7 +71,8 @@ SynthDef.new("sinGliss",
 
 		sig = Decay2.ar(imp, attackTime, decayTime,
 			SinOsc.ar(SinOsc.kr(0.01, 0, 110, freqDecay)));
-
+		sig = Mix(sig);
+		sig = Pan2.ar(sig, 0);
 		Out.ar(outBus, sig*direct*ampMaster);
 		Out.ar(effectBus, sig*(1-direct)*ampMaster);
 }).add(completionMsg: NetAddr.localAddr.sendMsg(\startNeutral, 1); );
@@ -77,7 +81,7 @@ SynthDef.new("myReverb",
 	{
 		arg outBus = 0, inBus, direct = 0.5, ampMaster = 0.2;
 		var outDelay, sig, input;
-
+		//
 		input = In.ar(inBus, 1);
 
 		// reverb predelay time :
@@ -89,6 +93,8 @@ SynthDef.new("myReverb",
 
 		// two parallel chains of 4 allpass delays (8 total) :
 		4.do({ sig = AllpassN.ar(sig, 0.050, [0.050.rand, 0.050.rand], 1) });
+		sig = Mix(sig);
+
 		Out.ar(outBus, sig*ampMaster);
 	}
 ).add(completionMsg: NetAddr.localAddr.sendMsg(\startNeutral, 2); );
@@ -106,8 +112,10 @@ SynthDef.new("myReverb",
 		// "Gliss trigger ".post; delta.postln;
 		//~synthGliss.set("impulseFreq", 0.001+(1.0.rand)/4);
 
-		Synth.before(~synthReverb, "sinGliss",
-			[effectBus: ~bussMix, freq: freqRand, freqDecay: freqRand]);
+		Synth.before(~synthReverb, "sinGliss", [
+			effectBus: ~bussMix, outBus: ~main.neutralBus,
+			freq: freqRand, freqDecay: freqRand
+		]);
 	}
 });
 
@@ -138,21 +146,27 @@ OSCdef(\startNeutral, {
 		~bussMix = Bus.audio(s, 2);
 
 		// run synths
-		~synthReverb   = Synth.new("myReverb", [inBus: ~bussMix]
-		);
+		~synthReverb   = Synth.new("myReverb", [
+			inBus: ~bussMix,
+			outBus: ~main.neutralBus
+		]);
 
-		~synthDrops    = Synth.before(~synthReverb, "Sinescape",
-			[effectBus: ~bussMix, bwFreqStart: 120, density: 1, amp: 30]
-		);
+		~synthDrops    = Synth.before(~synthReverb, "Sinescape", [
+			effectBus: ~bussMix,
+			outBus: ~main.neutralBus,
+			bwFreqStart: 120, density: 1, ampMaster: 0.1
+		]);
 
-		~synthAmbiance = Synth.before(~synthReverb, "Sinescape",
-			[effectBus: ~bussMix, bwFreqStart: 8,
-				density: 3, direct: 0.2, amp: 50]
-		);
+		~synthAmbiance = Synth.before(~synthReverb, "Sinescape", [
+			effectBus: ~bussMix,
+			outBus: ~main.neutralBus,
+			bwFreqStart: 8, density: 3, direct: 0.2, amp: 50
+		]);
 
-		~synthGliss    = Synth.before(~synthReverb, "sinGliss",
-			[effectBus: ~bussMix]
-		);
+		~synthGliss    = Synth.before(~synthReverb, "sinGliss", [
+			effectBus: ~bussMix,
+			outBus: ~main.neutralBus
+		]);
 
 		~routineGliss.play;
 	}.fork; });

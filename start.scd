@@ -47,7 +47,7 @@ o.memSize = 2**19;
 				SinOsc.ar([400, 404], mul: 0.4)
 			) * Linen.kr(Impulse.kr(0), doneAction: 2)
 		}.play;);
-		// 2.wait;
+		2.wait;
 		// 7.wait;
 		~thisPath = Document.current.dir;
 		~thisPath = ~thisPath +/+ "/main.scd";

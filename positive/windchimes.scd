@@ -60,7 +60,7 @@ SynthDef(\windchime, {
 
     Out.ar(out, sig);
 }).add;
-)
+);
 
 
 
@@ -91,7 +91,8 @@ Pdef(\windchimes,
 		\init_rate, Pwhite(0.01, 20, inf),
 		\sustain, 3,
 		// \db, Pexprand( -24, -1, inf)
-		\db, Pbrown( -24, -1, 0.5, inf)
+		\db, Pbrown( -24, -1, 0.5, inf),
+		\out, ~main.posBus
 	)
 ).play;
-)
+);

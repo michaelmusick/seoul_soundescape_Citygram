@@ -27,7 +27,10 @@ Main File and System Variables
 /*********************************************
 SYSTEM WIDE BUSES
 *********************************************/
-~main.mainOutput = Bus.audio(s,2);
+~main.mainOutput = 0;
+~main.neutralBus = Bus.audio(s, 2);
+~main.posBus     = Bus.audio(s, 2);
+~main.negBus     = Bus.audio(s, 2);
 
 
 
@@ -37,14 +40,25 @@ LOAD ALL OTHER FILES
 {
 	"about to load files".postln;
 	// 4.0.wait;
-	"Loading /common/*.scd".postln;
-	~thisPath = ~thisPath +/+ "ss9/");
-	(~main.dir +/+ "common/*.scd").loadPaths;
-	4.0.wait;
-	("Loading /species_" ++ ~main.speciesNum ++"/*.scd").postln;
-	(~main.dir +/+ "species_" ++ ~main.speciesNum ++ "/*.scd").loadPaths;
-	4.0.wait;
-	"starting main out".postln;
-	~main.mainOut = Synth(\mainOutput, addAction: \addToTail);
+
+	"Loading Positive Layer".postln;
+	(~thisPath +/+ "positive/*.scd").loadPaths;
+	2.0.wait;
+
+	"Loading Neutral Layer".postln;
+	(~thisPath +/+ "neutral/*.scd").loadPaths;
+	2.0.wait;
+
+	"Loading Negative Layer".postln;
+	(~thisPath +/+ "negative/*.scd").loadPaths;
+	2.0.wait;
+
+	"Loading Main Mixer".postln;
+	(~thisPath +/+ "mainMix/*.scd").loadPaths;
+	2.0.wait;
+
+	"Loading CG_Bridge".postln;
+	(~thisPath +/+ "cg_bridge.scd").loadPaths;
+
 }.fork;
 )

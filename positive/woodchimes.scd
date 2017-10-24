@@ -1,3 +1,4 @@
+
 (
 SynthDef(\woodBlock, {|freq = 220, amp = 0.1, sustain = 1, bright = 1, pan = 0, out=0|
 	var partials = [1, 2.572, 4.644, 6.984, 9.723, 12];
@@ -19,9 +20,9 @@ SynthDef(\woodBlock, {|freq = 220, amp = 0.1, sustain = 1, bright = 1, pan = 0, 
 
 	Out.ar(out, Pan2.ar(sig, pan));
 }).add;
-)
+);
 
-TempoClock.default.tempo = 88/60;
+
 
 
 (
@@ -66,9 +67,10 @@ Pdef(\woodchimes,
 		\type, Pwrand([\note, \rest], [0.5, 0.5], inf),
 		\sustain, 1,
 		// \db, Pexprand( -24, -1, inf)
-		\db, Pbrown( -24, -9, 0.5, inf)
+		\db, Pbrown( -24, -9, 0.5, inf),
+		\out, ~main.posBus
 	)
 ).play;
-)
+);
 
 

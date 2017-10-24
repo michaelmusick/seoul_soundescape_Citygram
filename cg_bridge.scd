@@ -170,11 +170,12 @@ thisProcess.removeOSCRecvFunc(~cg_data_func);
 			computeAvg.(\TD_TemporalCentroid, ~cgData[~dataPtr], ~cgGroupData[~dataPtr]);
 			computeAvg.(\TD_RMS, ~cgData[~dataPtr], ~cgGroupData[~dataPtr]);
 
-			// increment data pointer
-			~dataPtr = (~dataPtr + 1) % ~cgData.size;
 
 			// let other processes know new data is ready
-			NetAddr.localAddr.sendMsg(\newDataReady, 0);
+			NetAddr.localAddr.sendMsg(\newDataReady, ~dataPtr);
+
+			// increment data pointer
+			~dataPtr = (~dataPtr + 1) % ~cgData.size;
 		},
 
 		/* General OSC Data Handling */
@@ -292,6 +293,7 @@ thisProcess.addOSCRecvFunc(~cg_data_func);
 )
 
 
-
+/*
 // STOP PROCESSING
 thisProcess.removeOSCRecvFunc(~cg_data_func);
+*/
