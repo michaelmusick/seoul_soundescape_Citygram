@@ -63,7 +63,7 @@ Pdef(\windchimes_high,
 	Pbind(
 		\instrument, \windchime_high,
 		\root, 0,
-		\octave, Pwhite(6, 7, inf),
+		\octave, Prand([6, 7], inf),
 		\degree, Prand([0,3,4,5,7], inf),
 
 		\dur, Pwalk([
