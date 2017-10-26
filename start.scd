@@ -42,11 +42,11 @@ o.memSize = 2**19;
 	// 10.wait;
 	s.doWhenBooted({
 		"\n\nTest the system\n".postln;
-		(~test = {
+		/*(~test = {
 			Mix(
 				SinOsc.ar([400, 404], mul: 0.4)
 			) * Linen.kr(Impulse.kr(0), doneAction: 2)
-		}.play;);
+		}.play;);*/
 		2.wait;
 		// 7.wait;
 		~thisPath = Document.current.dir;

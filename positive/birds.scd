@@ -8,6 +8,8 @@ FROM:
 // SYNTHDEFs - 'billbird' and 'billbigbird'
 // =====================================================
 
+~main.birdAmp = 0.2;
+
 (
 SynthDef("billbird", { arg dur, freq, freqskew, amp, t_gate, pan=0, out=0;
 	var freqenv, ampenv, freqenvctl, ampenvctl, sig;
@@ -49,7 +51,7 @@ SynthDef("billbigbird", { arg dur, freq, freqskew, amp, t_gate, pan=0, out=0;
 	Out.ar(out, sig);
 }).add;
 
-SynthDef(\dummy, {}).add;
+SynthDef(\dummy, {Line.kr(0,1,0.0001,1,0,2)}).add;
 
 
 
@@ -145,7 +147,7 @@ Pdef(\chirping_sparrow,
 					x = Synth("billbird", [
 						\t_gate, 1, \pan, pan,
                         \out, ~main.posBus,
-						\amp, 0.05,
+						\amp, 0.05 * ~main.birdAmp,
 						\freqenv, freqenv,
 						\freqskew, 2400,
 						\freq, freq,
@@ -205,21 +207,21 @@ Pdef(\yellow_warbler,
 
 				Synth("billbird", [
 					\dur, 0.05, \freq, freq*1.12, \freqskew, 400,
-					\amp, 0.05, \freqenv, yellow_up,
+					\amp, 0.05 * ~main.birdAmp, \freqenv, yellow_up,
 					\ampenv, main_amp, \t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
 				yel_t[1].wait;
 				Synth("billbird", [
 					\dur, 0.12, \freq, freq, \freqskew,
-					1500, \amp, 0.15, \freqenv, yellow_swirl,
+					1500, \amp, 0.15 * ~main.birdAmp, \freqenv, yellow_swirl,
 					\ampenv, swirl_amp, \t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
 				yel_t[2].wait;
 				Synth("billbird", [
 					\dur, 0.13, \freq, freq, \freqskew,
-					1700, \amp, 0.17, \freqenv, yellow_swirl,
+					1700, \amp, 0.17 * ~main.birdAmp, \freqenv, yellow_swirl,
 					\ampenv, swirl_amp, \t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
@@ -233,14 +235,15 @@ Pdef(\yellow_warbler,
 				yel_t[4].wait;
 				Synth("billbird", [
 					\dur, 0.15, \freq, freq, \freqskew,
-					2000, \amp, 0.20, \freqenv, yellow_swirl,
+					2000, \amp, 0.20 * ~main.birdAmp, \freqenv, yellow_swirl,
 					\ampenv, swirl_amp, \t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
 				yel_t[5].wait;
 				Synth("billbird", [
 					\dur, 0.075, \freq, freq*0.74,
-					\freqskew, 1000, \amp, 0.20, \freqenv, yellow_down,
+					\freqskew, 1000, \amp, 0.20 * ~main.birdAmp,
+					\freqenv, yellow_down,
 					\ampenv, main_amp, \t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
@@ -254,14 +257,16 @@ Pdef(\yellow_warbler,
 				yel_t[7].wait;
 				Synth("billbird", [
 					\dur, 0.075, \freq, freq*0.74,
-					\freqskew, 800, \amp, 0.15, \freqenv, yellow_down,
+					\freqskew, 800, \amp, 0.15 * ~main.birdAmp,
+					\freqenv, yellow_down,
 					\ampenv, main_amp, \t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
 				yel_t[8].wait;
 				Synth("billbird", [
 					\dur, 0.2, \freq, freq*0.74,
-					\freqskew, 2000, \amp, 0.2, \freqenv, yellow_last,
+					\freqskew, 2000, \amp, 0.2 * ~main.birdAmp,
+					\freqenv, yellow_last,
 					\ampenv, swirl_amp, \t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
@@ -332,21 +337,24 @@ Pdef(\orchard_oriele,
 
 				Synth("billbird", [
 					\dur, 0.03, \freq, freq*1.85, \freqskew, 100,
-					\amp, 0.5, \freqenv, oridwn, \ampenv, main_amp,
+					\amp, 0.5 * ~main.birdAmp,
+					\freqenv, oridwn, \ampenv, main_amp,
 					\t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
 				ori_t[1].wait;
 				Synth("billbird", [
 					\dur, 0.05, \freq, freq*1.25, \freqskew,
-					1000, \amp, 0.1, \freqenv, oriup, \ampenv, main_amp,
+					1000, \amp, 0.1 * ~main.birdAmp,
+					\freqenv, oriup, \ampenv, main_amp,
 					\t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
 				ori_t[2].wait;
 				Synth("billbigbird", [
 					\dur, 0.1, \freq, freq, \freqskew,
-					800, \amp, 0.2, \freqenv, oriupdwna, \ampenv, main_amp,
+					800, \amp, 0.2 * ~main.birdAmp,
+					\freqenv, oriupdwna, \ampenv, main_amp,
 					\partialNumbers, [1, 2, 3],
 					\partialAmps, [1, 0.2, 0.5],
 					\t_gate, 1, \pan, pan,
@@ -355,13 +363,16 @@ Pdef(\orchard_oriele,
 				ori_t[3].wait;
 				Synth("billbird", [
 					\dur, 0.3, \freq, freq*1.95, \freqskew,
-					1200, \amp, 0.1, \freqenv, oridwn, \ampenv, main_amp, \t_gate, 1, \pan, pan,
+					1200, \amp, 0.1 * ~main.birdAmp,
+					\freqenv, oridwn, \ampenv, main_amp,
+					\t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
 				ori_t[4].wait;
 				Synth("billbigbird", [
 					\dur, 0.21, \freq, freq,
-					\freqskew, 1200, \amp, 0.15, \freqenv, oribiga,
+					\freqskew, 1200, \amp, 0.15 * ~main.birdAmp,
+					\freqenv, oribiga,
 					\ampenv, main_amp,
 					\partialNumbers, [1, 2],
 					\partialAmps, [1, 0.05], \t_gate, 1, \pan, pan,
@@ -370,14 +381,16 @@ Pdef(\orchard_oriele,
 				ori_t[5].wait;
 				Synth("billbird", [
 					\dur, 0.05, \freq, freq*2.1, \freqskew,
-					1000, \amp, 0.1, \freqenv, oridwn,
+					1000, \amp, 0.1 * ~main.birdAmp,
+					\freqenv, oridwn,
 					\ampenv, main_amp, \t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
 				ori_t[6].wait;
 				Synth("billbigbird", [
 					\dur, 0.1, \freq, freq, \freqskew,
-					1000, \amp, 0.25, \freqenv, orimid, \ampenv, main_amp,
+					1000, \amp, 0.25 * ~main.birdAmp,
+					\freqenv, orimid, \ampenv, main_amp,
 					\partialNumbers, [1, 2],
 					\partialAmps, [1, 0.05], \t_gate, 1, \pan, pan,
                     \out, ~main.posBus
@@ -385,7 +398,8 @@ Pdef(\orchard_oriele,
 				ori_t[7].wait;
 				Synth("billbigbird", [
 					\dur, 0.1, \freq, freq, \freqskew,
-					1000, \amp, 0.25, \freqenv, orimid, \ampenv, main_amp,
+					1000, \amp, 0.25 * ~main.birdAmp,
+					\freqenv, orimid, \ampenv, main_amp,
 					\partialNumbers, [1, 2],
 					\partialAmps, [1, 0.05], \t_gate, 1, \pan, pan,
                     \out, ~main.posBus
@@ -393,35 +407,37 @@ Pdef(\orchard_oriele,
 				ori_t[8].wait;
 				Synth("billbird", [
 					\dur, 0.1, \freq, freq*1.15, \freqskew,
-					3200, \amp, 0.1, \freqenv, oriupdwnb,
+					3200, \amp, 0.1 * ~main.birdAmp,
+					\freqenv, oriupdwnb,
 					\ampenv, oriamp, \t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
 				ori_t[9].wait;
 				Synth("billbird", [
 					\dur, 0.03, \freq, freq*0.9, \freqskew,
-					300, \amp, 0.05, \freqenv, oriup,
+					300, \amp, 0.05 * ~main.birdAmp, \freqenv, oriup,
 					\ampenv, main_amp, \t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
 				ori_t[10].wait;
 				Synth("billbird", [
 					\dur, 0.03, \freq, freq*1.1, \freqskew,
-					100, \amp, 0.4, \freqenv, oridwn,
+					100, \amp, 0.4 * ~main.birdAmp, \freqenv, oridwn,
 					\ampenv, main_amp, \t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
 				ori_t[11].wait;
 				Synth("billbird", [
 					\dur, 0.07, \freq, freq*1.25, \freqskew,
-					2000, \amp, 0.15, \freqenv, oriupdwnb,
+					2000, \amp, 0.15 * ~main.birdAmp, \freqenv, oriupdwnb,
 					\ampenv, oriamp, \t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
 				ori_t[12].wait;
 				Synth("billbigbird", [
 					\dur, 0.2, \freq, freq*1.2,
-					\freqskew, 1200, \amp, 0.25, \freqenv, oridwnup,
+					\freqskew, 1200, \amp, 0.25 * ~main.birdAmp,
+					\freqenv, oridwnup,
 					\ampenv, main_amp,
 					\partialNumbers, [1, 2],
 					\partialAmps, [1, 0.04], \t_gate, 1, \pan, pan,
@@ -430,20 +446,24 @@ Pdef(\orchard_oriele,
 				ori_t[13].wait;
 				Synth("billbird", [
 					\dur, 0.02, \freq, freq*1.1, \freqskew,
-					3000, \amp, 0.4, \freqenv, oriup, \ampenv, main_amp, \t_gate, 1, \pan, pan,
+					3000, \amp, 0.4 * ~main.birdAmp,
+					\freqenv, oriup, \ampenv, main_amp,
+					\t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
 				ori_t[14].wait;
 				Synth("billbird", [
 					\dur, 0.02, \freq, freq*1.1, \freqskew,
-					3000, \amp, 0.4, \freqenv, oriup,
+					3000, \amp, 0.4 * ~main.birdAmp,
+					\freqenv, oriup,
 					\ampenv, main_amp, \t_gate, 1, \pan, pan,
                     \out, ~main.posBus
 				]);
 				ori_t[15].wait;
 				Synth("billbigbird", [
 					\dur, 0.17, \freq, freq,
-					\freqskew, 1000, \amp, 0.2, \freqenv, oriupdwna,
+					\freqskew, 1000, \amp, 0.2 * ~main.birdAmp,
+					\freqenv, oriupdwna,
 					\ampenv, main_amp,
 					\partialNumbers, [1, 2],
 					\partialAmps, [1, 0.04], \t_gate, 1, \pan, pan,
@@ -498,7 +518,7 @@ Pdef(\cassins_kingbird,
 			Task({
 				Synth("billbigbird", [
 					\dur, 0.04, \freq, freq,
-					\freqskew, 1200, \amp, 0.15,
+					\freqskew, 1200, \amp, 0.15 * ~main.birdAmp,
 					\freqenv, kingfirst, \ampenv, main_amp,
 					\partialNumbers, [1, 2, 3, 4],
 					\partialAmps, [1, 0.5, 0, 0.2], \t_gate, 1, \pan, pan,
@@ -506,7 +526,7 @@ Pdef(\cassins_kingbird,
 				]);
 				king_t[1].wait;    Synth("billbigbird", [
 					\dur, 0.18, \freq, freq,
-					\freqskew, 900, \amp, 0.25,
+					\freqskew, 900, \amp, 0.25 * ~main.birdAmp,
 					\freqenv, kingsecond, \ampenv, main_amp,
 					\partialNumbers, [1, 2, 3, 4],
 					\partialAmps, [1, 0.01, 0, 0.1], \t_gate, 1, \pan, pan,
