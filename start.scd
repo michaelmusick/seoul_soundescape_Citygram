@@ -38,8 +38,8 @@ o.memSize = 2**19;
 {
 	"\ngetting ready to boot\n".postln;
 	s.boot;
-	"waiting 10 seconds for things to calm down\n\n".postln;
-	// 10.wait;
+	"waiting 30 seconds for things to calm down\n\n".postln;
+	30.wait;
 	s.doWhenBooted({
 		"\n\nTest the system\n".postln;
 		/*(~test = {
@@ -49,10 +49,10 @@ o.memSize = 2**19;
 		}.play;);*/
 		2.wait;
 		// 7.wait;
-		~thisPath = Document.current.dir;
-		~thisPath = ~thisPath +/+ "/main.scd";
+		// ~thisPath = Document.current.dir;
+		~thisPath = "/home/pi/soundescape/";
 
-		(~thisPath).loadPaths;
+		(~thisPath +/+ "/main.scd").loadPaths;
 	});
 }.fork;
 
