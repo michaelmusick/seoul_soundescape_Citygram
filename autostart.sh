@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Starting up Sonic Space 10, sclang, and Jackd"
+echo "Starting up S[e]oul Sound[e]scape"
 
 cont=true
 # Turn the following sleep back on if this is a boot time script
