@@ -7,7 +7,7 @@ Wind chimes,
 (
 SynthDef(\windchime_high, {
     arg out = 0, freq = 220, sustain = 4, init_rate = 20,
-	atk = 0.001, sus = 0.6, rel = 0.2, pan = 0, amp = -6.dbamp;
+	atk = 0.001, sus = 0.6, rel = 0.2, pan = 0, amp = -6.dbamp, hardLev = 1.5;
 
     var amps = [ 0.1, 0.2, 0.3, 0.17 ];
     var rings = [ 15, 17, 10, 5 ];
@@ -52,7 +52,7 @@ SynthDef(\windchime_high, {
 	sig_h = RHPF.ar( sig, harmonics[2], 0.2 );
 	sig_h = sig_h * mix_sig.linlin(-1,1,0.9,0);
 	sig = Mix( [ sig_l, sig_h ] );
-	sig = sig * env;
+	sig = sig * env * hardLev;
 	sig = Pan2.ar(sig, pan);
 
     Out.ar(out, sig);

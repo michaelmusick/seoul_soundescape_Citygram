@@ -14,7 +14,7 @@ TempoClock.default.tempo = 88/60;
 // =====================================================
 
 // main amp for mix
-~main.birdAmp = -15.dbamp;
+~main.birdAmp = -18.dbamp;
 
 // duration pdef
 Pdef(\bird_durs, Pwrand(

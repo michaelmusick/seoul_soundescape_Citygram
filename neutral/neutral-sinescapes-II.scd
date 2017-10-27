@@ -35,7 +35,8 @@ NetAddr.localAddr
 SynthDef.new("Sinescape",
 	{
 		arg outBus = 0, density = 50, bwFreqStart = 100.0,
-		amp = 30, effectBus, direct = 0.5, ampMaster = 0.5;
+		amp = 30, effectBus, direct = 0.5, ampMaster = 0.5,
+		hardLev = 1.5;
 		var sig, scalerDensity = 0.050, scalerAmp = 10;
 
 		// update density with "lag" or slide between values
@@ -54,7 +55,7 @@ SynthDef.new("Sinescape",
 					[resBwr, resBwr*2, resBwr*3],
 					[resMult, resMult/2, resMult/3])})
 		);
-		sig = Mix(sig);
+		sig = Mix(sig) * hardLev;
 		sig = Pan2.ar(sig, 0);
 		// sound ouput
 		Out.ar(outBus, sig*direct*ampMaster);
@@ -66,14 +67,14 @@ SynthDef.new("Sinescape",
 SynthDef.new("sinGliss",
 	{
 		arg outBus = 0, effectBus, impulseFreq = 0.1,
-		ampMaster = 0.2, freq = 220, freqDecay = 200;
+		ampMaster = 0.2, freq = 220, freqDecay = 200, hardLev = 1.5;
 		var imp, sig, direct = 0.5, attackTime = 0.1, decayTime = 1;
 
 		imp = EnvGen.kr(Env.perc, 2.0, doneAction: 2)*SinOsc.ar([freq, freq*2, freq*3],0,0.1);
 
 		sig = Decay2.ar(imp, attackTime, decayTime,
 			SinOsc.ar(SinOsc.kr(0.01, 0, 110, freqDecay)));
-		sig = Mix(sig);
+		sig = Mix(sig) * hardLev;
 		sig = Pan2.ar(sig, 0);
 		Out.ar(outBus, sig*direct*ampMaster);
 		Out.ar(effectBus, sig*(1-direct)*ampMaster);
@@ -108,7 +109,7 @@ SynthDef.new("myReverb",
 	var delta, freqRand, mpy = 1;
 
 	loop {
-		delta = rrand(4.0, 60.0*2);
+		delta = rrand(4.0, 10);
 		delta.yield;
 
 		freqRand = 1000.0.rand + 20.0;
@@ -157,19 +158,19 @@ OSCdef(\startNeutral, {
 		~synthDrops    = Synth.before(~synthReverb, "Sinescape", [
 			effectBus: ~bussMix,
 			outBus: ~main.neutralBus,
-			bwFreqStart: 120, density: 0.1, amp: 3.1
+			bwFreqStart: 120, density: 2, amp: 0.8
 		]);
 
 		~synthAmbiance = Synth.before(~synthReverb, "Sinescape", [
 			effectBus: ~bussMix,
 			outBus: ~main.neutralBus,
-			bwFreqStart: 8, density: 0.2, direct: 0.07, amp: 1.5
+			bwFreqStart: 8, density: 1, direct: 0.2, amp: 100
 		]);
 
-		~synthGliss    = Synth.before(~synthReverb, "sinGliss", [
-			effectBus: ~bussMix,
-			outBus: ~main.neutralBus
-		]);
+		// ~synthGliss    = Synth.before(~synthReverb, "sinGliss", [
+		// 	effectBus: ~bussMix,
+		// 	// outBus: ~main.neutralBus
+		// ]);
 
 		~routineGliss.play;
 	}.fork; });

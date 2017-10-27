@@ -1,6 +1,8 @@
 
 (
-SynthDef(\woodBlock, {|freq = 220, amp = 0.1, sustain = 1, bright = 1, pan = 0, out=0|
+SynthDef(\woodBlock, {
+	arg freq = 220, amp = 0.1, sustain = 1, bright = 1,
+	pan = 0, out=0, hardLev = 1.5;
 	var partials = [1, 2.572, 4.644, 6.984, 9.723, 12];
 	var sig = Array.fill(6, {|i|
 		var i_sig = SinOsc.ar(
@@ -19,7 +21,7 @@ SynthDef(\woodBlock, {|freq = 220, amp = 0.1, sustain = 1, bright = 1, pan = 0, 
 	}).sum;
 
 	2.do({ sig = AllpassN.ar(sig, 0.050, [0.050.rand, 0.050.rand], 1) });
-	sig = Mix(sig);
+	sig = Mix(sig) * hardLev;
 
 	Out.ar(out, Pan2.ar(sig*(-9).dbamp, pan));
 }).add;
