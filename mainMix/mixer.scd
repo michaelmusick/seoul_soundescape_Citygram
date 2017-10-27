@@ -19,7 +19,7 @@ Notes: Handles the mixing and managment of the three voice layers
 
 // memory length, in mins
 ~main.memoryLength = ( 120 ) * 60;
-~main.rsdHist = Array.newClear(~main.memoryLength);
+if( (~main.rsdHist).isNil, { ~main.rsdHist = Array.newClear(~main.memoryLength); });
 ~main.rsdHistIdx = 0;
 ~main.rsdHistFull = false;
 ~main.maxRSDs = 0;
