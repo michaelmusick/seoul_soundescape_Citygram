@@ -12,8 +12,7 @@
 				s.boot;
 				10.wait;
 				s.doWhenBooted({
-					~thisPath = "/home/pi/soundescape/";
-					(~thisPath +/+ "/start.scd").loadPaths;
+					(~thisPath +/+ "start.scd").loadPaths;
 				});
 			}.fork;
 		});
