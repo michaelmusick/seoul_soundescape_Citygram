@@ -3,8 +3,11 @@
 		if( (s.serverRunning.not || s.unresponsive), {
 			{
 				"stopped, trying to restart".postln;
-				Server.killAll;
 				Pdef.removeAll;
+				OSCdef.freeAll
+				Server.hardFreeAll
+				Server.killAll;
+
 				~routineGliss.stop;
 				~main.serverCheck.stop;
 

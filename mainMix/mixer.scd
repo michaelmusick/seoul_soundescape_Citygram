@@ -13,8 +13,12 @@ Notes: Handles the mixing and managment of the three voice layers
 **************************************************************/
 
 
+~main.negRange = [0,0.2];
+~main.neutRange = [0.1,0.65];
+~main.posRange = [0.5,1.0];
+
 // memory length, in mins
-~main.memoryLength = ( 1 ) * 60;
+~main.memoryLength = ( 120 ) * 60;
 ~main.rsdHist = Array.newClear(~main.memoryLength);
 ~main.rsdHistIdx = 0;
 ~main.rsdHistFull = false;
@@ -59,10 +63,28 @@ OSCdef(\updateMix, {
 		mixVal = activeRSDs.linlin(~main.minRSDs, ~main.maxRSDs, 0, 1);
 		mixVal.postln;
 
-		pos  = mixVal.linlin( 0.5, 1, 0, 1, \minmax );
-		neut = (mixVal.clip(0.2,0.6).linlin(0.3,0.7,0,1) * pi).sin.clip(0,1);
-		neg  = mixVal.linlin( 0, 0.3, 1, 0, \minmax );
+		pos  = mixVal.linlin(
+			~main.posRange[0], ~main.posRange[1],
+			0,                 1,
+			\minmax
+		);
+		neg  = mixVal.linlin(
+			~main.negRange[0], ~main.negRange[1],
+			1,                 0,
+			\minmax
+		);
+		neut = (
+			mixVal.clip(
+				~main.neutRange[0], ~main.neutRange[1]
+		).linlin(
+				~main.neutRange[0], ~main.neutRange[1],
+				0,                  1
+		) * pi ).sin.clip(0,1);
 		~main.mainOut.set(\posLevel, pos, \neutLevel, neut, \negLevel, neg);
+
+		("pos: "+pos).postln;
+		("neut: "+neut).postln;
+		("neg: "+neg).postln;
 	});
 
 
