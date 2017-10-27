@@ -77,5 +77,5 @@ Pdef(\windchimes_high,
 		\out, ~main.posBus,
 		// \blah, Pfuncn({ |ev| ev.postln; }, inf)
 	)
-).play;
+);
 );

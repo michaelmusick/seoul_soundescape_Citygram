@@ -45,7 +45,7 @@ Pdef(\woodchimes,
 		// \blah, Pfuncn({ |ev| ev.postln; }, inf)
 
 	)
-).play;
+);
 );
 
 

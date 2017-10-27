@@ -52,15 +52,15 @@ Main File and System Variables
 
 	"Loading Neutral Layer".postln;
 	(~thisPath +/+ "neutral/*.scd").loadPaths;
-	// 10.0.wait;
+	10.0.wait;
 
 	"Loading Negative Layer".postln;
 	(~thisPath +/+ "negative/*.scd").loadPaths;
-	// 10.0.wait;
+	10.0.wait;
 
 	"Loading Positive Layer".postln;
 	(~thisPath +/+ "positive/*.scd").loadPaths;
-	// 10.0.wait;
+	10.0.wait;
 
 	"Loading Main Mixer".postln;
 	(~thisPath +/+ "mainMix/*.scd").loadPaths;

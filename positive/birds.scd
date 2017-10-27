@@ -165,7 +165,7 @@ Pdef(\chirping_sparrow,
 
 		}, inf)
 	)
-).play;
+);
 );
 
 
@@ -284,7 +284,7 @@ Pdef(\yellow_warbler,
 			);
 		}, inf)
 	)
-).play;
+);
 );
 
 
@@ -487,7 +487,7 @@ Pdef(\orchard_oriele,
 			);
 		}, inf)
 	)
-).play;
+);
 );
 
 
@@ -555,7 +555,7 @@ Pdef(\cassins_kingbird,
 			);
 		}, inf)
 	)
-).play;
+);
 );
 
 

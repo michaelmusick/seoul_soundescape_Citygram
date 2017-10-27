@@ -85,5 +85,5 @@ Pdef(\windchimes,
 
 
 	)
-).play;
+);
 );

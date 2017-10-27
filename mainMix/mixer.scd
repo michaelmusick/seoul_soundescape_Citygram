@@ -19,12 +19,11 @@ Notes: Handles the mixing and managment of the three voice layers
 
 // memory length, in mins
 ~main.memoryLength = ( 120 ) * 60;
-if( (~main.rsdHist).isNil, { ~main.rsdHist = Array.newClear(~main.memoryLength); });
+~main.rsdHist = Array.newClear(~main.memoryLength);
 ~main.rsdHistIdx = 0;
 ~main.rsdHistFull = false;
 ~main.maxRSDs = 0;
 ~main.minRSDs = 1000000;
-~main.numActiveRSDs = 0;
 (
 OSCdef(\updateMix, {
 	|msg, time, addr|
@@ -38,7 +37,6 @@ OSCdef(\updateMix, {
 	if( ~cgGroupData[ptr][\activeRSDs].notNil, {
 		activeRSDs = ~cgGroupData[ptr][\activeRSDs];
 		// ("active RSDs: " + activeRSDs).postln;
-		~main.numActiveRSDs = activeRSDs;
 
 		~main.rsdHist.put(~main.rsdHistIdx, activeRSDs);
 
