@@ -50,7 +50,7 @@ o.memSize = 2**19;
 		2.wait;
 		// 7.wait;
 		// ~thisPath = Document.current.dir;
-		~thisPath = "/home/pi/soundescape/";
+		~thisPath = "/home/pi/seoul_CG/";
 
 		(~thisPath +/+ "/main.scd").loadPaths;
 	});

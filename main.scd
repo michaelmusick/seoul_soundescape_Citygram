@@ -24,7 +24,7 @@ Main File and System Variables
 
 	// ~thisPath = Document.current.dir;
 	// if( ~thisPath.isNil, {
-		~thisPath = "/home/pi/soundescape/";
+		~thisPath = "/home/pi/seoul_CG/";
 // });
 	~thisPath.postln;
 
