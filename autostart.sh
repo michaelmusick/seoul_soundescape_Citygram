@@ -13,9 +13,8 @@ while $cont
 		sudo killall scide
 		sleep 5
 
-
-
-		scide
+        # start SC!
+		sudo /usr/local/bin/scide
 		echo $?
 
 		sleep 5
