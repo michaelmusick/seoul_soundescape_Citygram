@@ -4,8 +4,8 @@
 			{
 				"stopped, trying to restart".postln;
 				Pdef.removeAll;
-				OSCdef.freeAll
-				Server.hardFreeAll
+				OSCdef.freeAll;
+				Server.hardFreeAll;
 				Server.killAll;
 
 				~routineGliss.stop;
