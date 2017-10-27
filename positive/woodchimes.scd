@@ -18,7 +18,10 @@ SynthDef(\woodBlock, {|freq = 220, amp = 0.1, sustain = 1, bright = 1, pan = 0, 
 		i_sig*i_env;
 	}).sum;
 
-	Out.ar(out, Pan2.ar(sig, pan));
+	2.do({ sig = AllpassN.ar(sig, 0.050, [0.050.rand, 0.050.rand], 1) });
+	sig = Mix(sig);
+
+	Out.ar(out, Pan2.ar(sig*(-9).dbamp, pan));
 }).add;
 );
 
@@ -29,46 +32,18 @@ SynthDef(\woodBlock, {|freq = 220, amp = 0.1, sustain = 1, bright = 1, pan = 0, 
 Pdef(\woodchimes,
 	Pbind(
 		\instrument, \woodBlock,
-		\degree, Prand([0,3,4,5,7], inf),
+		\root, 0,
 		\octave, Pwhite(4,5,inf),
-		\dur, Pwalk([
-			Pseq([1,1,1,1]*0.25, 1),
-			Pseq([1,1,0.5,0.25,0.25,1]*0.25, 1),
-			Pseq([1,1,2,0.125,0.125,0.25,0.125,0.25,0.125,0.5]*0.25, 1),
-			Pseq([1,1,1,1]*0.125, 2),
-			Pseq([1,1,1,1]*0.125, 4),
-			Pseq([1,1,1,1]*0.125, 8),
-			Pseq([1]*0.0625, 16),
-			Pseq([0.5,0.5,0.25,0.5,0.25]*0.25, 1),
-			Pseq([0.25,0.5,0.25,0.5,0.5]*0.125, 2),
-			Pseq([0.25,0.5,0.25,0.5,0.5]*0.25, 1),
-			Pseq([1]*0.0625, 16),
-			Pseq([1,8,1,2]*0.5,1),
-			Pseq([1,8,1,2]*0.25,1),
-			Pseq([1,4,1,0.5,0.5,2]*0.5,1),
-			Pseq([1,0.5,0.5,1,2,2,1]*0.25,1),
-			Pseq([1,0.25,0.5,0.25,1,0.5,0.5,0.25,0.75,1,2]*0.5,1),
-			Pseq([1,8,1,2],1),
-			Pseq([1,3],1),
-			Pseq([3,1],1),
-			Pseq([1,2,1],1),
-			Pseq([1,1,0.5,0.5,1],1),
-			Pseq([2,2],2),
-			Pseq([1],4),
-			Pseq([2],4),
-			Pseq([4],1)
-		],
-		Pwrand(
-			[-6, -2, -1, 0, 1, 2, 5],
-			[0.1, 0.5, 0.25, 0.1, 0.25, 0.5, 0.2].normalizeSum, inf),
-		Pseq([1, -1], inf),
-
-		),
-		\type, Pwrand([\note, \rest], [0.5, 0.5], inf),
+		\degree, Prand([0,3,4,5,7], inf),
+		\freq, Pfunc { |ev| ev.use(ev[\freq]) },
+		\dur, Pdef(\chimePatterns),
 		\sustain, 1,
-		// \db, Pexprand( -24, -1, inf)
-		\db, Pbrown( -24, -9, 0.5, inf),
-		\out, ~main.posBus
+		\db, Pdef(\woodChime_db),
+		\amp, Pfunc { |ev| ev.use(ev[\amp]) },
+		// \type, Pwrand([\note, \rest], [0.5, 0.5], inf),
+		\out, ~main.posBus,
+		// \blah, Pfuncn({ |ev| ev.postln; }, inf)
+
 	)
 ).play;
 );

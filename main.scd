@@ -22,11 +22,10 @@ Main File and System Variables
 	// Define the environment variable for the entire system
 	~main = ();
 
-	// ~thisPath = Document.current.dir;
-	// if( ~thisPath.isNil, {
-		~thisPath = "/home/pi/seoul_CG/";
-// });
-	~thisPath.postln;
+	/*********************************************
+	SYSTEM WIDE ACTIVITY VARIABLES
+	*********************************************/
+	~main.activityLevel = 1;
 
 	/*********************************************
 	SYSTEM WIDE BUSES
@@ -53,15 +52,15 @@ Main File and System Variables
 
 	"Loading Neutral Layer".postln;
 	(~thisPath +/+ "neutral/*.scd").loadPaths;
-	10.0.wait;
+	// 10.0.wait;
 
 	"Loading Negative Layer".postln;
-	// (~thisPath +/+ "negative/*.scd").loadPaths;
-	10.0.wait;
+	(~thisPath +/+ "negative/*.scd").loadPaths;
+	// 10.0.wait;
 
 	"Loading Positive Layer".postln;
 	(~thisPath +/+ "positive/*.scd").loadPaths;
-	10.0.wait;
+	// 10.0.wait;
 
 	"Loading Main Mixer".postln;
 	(~thisPath +/+ "mainMix/*.scd").loadPaths;

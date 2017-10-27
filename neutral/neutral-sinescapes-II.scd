@@ -59,7 +59,9 @@ SynthDef.new("Sinescape",
 		// sound ouput
 		Out.ar(outBus, sig*direct*ampMaster);
 		Out.ar(effectBus, sig*(1-direct)*ampMaster);
-}).add(completionMsg: NetAddr.localAddr.sendMsg(\startNeutral, 0); );
+}).add(
+	completionMsg: NetAddr.localAddr.sendMsg(\startNeutral, 0);
+);
 
 SynthDef.new("sinGliss",
 	{
@@ -84,17 +86,18 @@ SynthDef.new("myReverb",
 		//
 		input = In.ar(inBus, 1);
 
-		// reverb predelay time :
-		outDelay = DelayN.ar(input, 0.048);
+		// // reverb predelay time :
+		// outDelay = DelayN.ar(input, 0.048);
+		//
+		// // 7 length modulated comb delays in parallel :
+		// sig = Mix.ar(Array.fill(7,
+		// {CombL.ar(outDelay, 0.1, LFNoise1.kr(0.1.rand, 0.04, 0.05), 15/4) }));
+		//
+		// // two parallel chains of 4 allpass delays (8 total) :
+		// 4.do({ sig = AllpassN.ar(sig, 0.050, [0.050.rand, 0.050.rand], 1) });
+		// sig = Mix(sig);
 
-		// 7 length modulated comb delays in parallel :
-		sig = Mix.ar(Array.fill(7,
-			{CombL.ar(outDelay, 0.1, LFNoise1.kr(0.1.rand, 0.04, 0.05), 15/4) }));
-
-		// two parallel chains of 4 allpass delays (8 total) :
-		4.do({ sig = AllpassN.ar(sig, 0.050, [0.050.rand, 0.050.rand], 1) });
-		sig = Mix(sig);
-
+		sig = FreeVerb.ar(input, 1.0, 0.8, 0.2) ! 2;
 		Out.ar(outBus, sig*ampMaster);
 	}
 ).add(completionMsg: NetAddr.localAddr.sendMsg(\startNeutral, 2); );
@@ -105,7 +108,7 @@ SynthDef.new("myReverb",
 	var delta, freqRand, mpy = 1;
 
 	loop {
-		delta = rrand(1, 30.0)*mpy;
+		delta = rrand(4.0, 60.0*2);
 		delta.yield;
 
 		freqRand = 1000.0.rand + 20.0;
@@ -154,13 +157,13 @@ OSCdef(\startNeutral, {
 		~synthDrops    = Synth.before(~synthReverb, "Sinescape", [
 			effectBus: ~bussMix,
 			outBus: ~main.neutralBus,
-			bwFreqStart: 120, density: 1, ampMaster: 0.1
+			bwFreqStart: 120, density: 0.1, amp: 3.1
 		]);
 
 		~synthAmbiance = Synth.before(~synthReverb, "Sinescape", [
 			effectBus: ~bussMix,
 			outBus: ~main.neutralBus,
-			bwFreqStart: 8, density: 3, direct: 0.2, amp: 50
+			bwFreqStart: 8, density: 0.2, direct: 0.07, amp: 1.5
 		]);
 
 		~synthGliss    = Synth.before(~synthReverb, "sinGliss", [

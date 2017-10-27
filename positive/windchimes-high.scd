@@ -13,7 +13,7 @@ SynthDef(\windchime_high, {
     var rings = [ 15, 17, 10, 5 ];
     var harmonics = freq * [ 1, 2.70863, 5.18345, 8.32374 ];
 
-    var env, impulse, sig, sig_h, sig_l, rate, mix_sig;
+    var env, impulse, imp2, sig, sig_h, sig_l, rate, mix_sig;
 
 
     env = EnvGen.kr(
@@ -22,8 +22,11 @@ SynthDef(\windchime_high, {
     );
 
 	rate = XLine.kr(init_rate, 0.01, sustain);
+	imp2 = Impulse.ar(0.1);
+	impulse = Dust.ar(rate);
+	impulse = Mix([imp2, impulse]);
 	impulse = Decay.ar(
-        Dust.ar(rate),
+        impulse,
         0.03,
         ClipNoise.ar(0.01)
     );
@@ -65,44 +68,14 @@ Pdef(\windchimes_high,
 		\root, 0,
 		\octave, Prand([6, 7], inf),
 		\degree, Prand([0,3,4,5,7], inf),
-
-		\dur, Pwalk([
-			Pseq([1,1,1,1]*0.25, 1),
-			Pseq([1,1,0.5,0.25,0.25,1]*0.25, 1),
-			Pseq([1,1,2,0.125,0.125,0.25,0.125,0.25,0.125,0.5]*0.25, 1),
-			Pseq([1,1,1,1]*0.125, 2),
-			Pseq([1,1,1,1]*0.125, 4),
-			Pseq([1,1,1,1]*0.125, 8),
-			Pseq([1]*0.0625, 16),
-			Pseq([0.5,0.5,0.25,0.5,0.25]*0.25, 1),
-			Pseq([0.25,0.5,0.25,0.5,0.5]*0.125, 2),
-			Pseq([0.25,0.5,0.25,0.5,0.5]*0.25, 1),
-			Pseq([1]*0.0625, 16),
-			Pseq([1,8,1,2]*0.5,1),
-			Pseq([1,8,1,2]*0.25,1),
-			Pseq([1,4,1,0.5,0.5,2]*0.5,1),
-			Pseq([1,0.5,0.5,1,2,2,1]*0.25,1),
-			Pseq([1,0.25,0.5,0.25,1,0.5,0.5,0.25,0.75,1,2]*0.5,1),
-			Pseq([1,8,1,2],1),
-			Pseq([1,3],1),
-			Pseq([3,1],1),
-			Pseq([1,2,1],1),
-			Pseq([1,1,0.5,0.5,1],1),
-			Pseq([2,2],2),
-			Pseq([1],4),
-			Pseq([2],4),
-			Pseq([4],1)
-		],
-		Pwrand(
-			[-6, -2, -1, 0, 1, 2, 5],
-			[0.1, 0.5, 0.25, 0.1, 0.25, 0.5, 0.2].normalizeSum, inf),
-		Pseq([1, -1], inf),
-		),
+		\freq, Pfunc { |ev| ev.use(ev[\freq]) },
+		\dur, Pdef(\chimePatterns),
 		\init_rate, Pwhite(0.01, 4, inf),
 		\sustain, 2,
-		// \db, Pexprand( -24, -1, inf)
-		\db, Pbrown( -24, -6, 0.5, inf),
-		\out, ~main.posBus
+		\db, Pdef(\highChime_db),
+		\amp, Pfunc { |ev| ev.use(ev[\amp]) },
+		\out, ~main.posBus,
+		// \blah, Pfuncn({ |ev| ev.postln; }, inf)
 	)
 ).play;
 );

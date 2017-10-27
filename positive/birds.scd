@@ -1,14 +1,15 @@
-/*
+/******************************************************************
+BIRDS
+******************************************************************/
 
-FROM:
-"http://new-supercollider-mailing-lists-forums-use-these.2681727.n2.nabble.com/Arrays-as-SynthDef-arguments-for-the-birds-tp7061974p7104917.html"
-*/
+
+
+
 
 // =====================================================
 // SYNTHDEFs - 'billbird' and 'billbigbird'
 // =====================================================
 
-~main.birdAmp = 0.2;
 
 (
 SynthDef("billbird", { arg dur, freq, freqskew, amp, t_gate, pan=0, out=0;
@@ -126,7 +127,7 @@ SynthDef(\dummy, {Line.kr(0,1,0.0001,1,0,2)}).add;
 Pdef(\chirping_sparrow,
 	Pbind(
 		\instrument, \dummy,
-		\dur, Prand([0.5, 1, 4, 8], inf),
+		\dur, Pdef(\bird_durs),
 		\root, 0,
 		\octave, Prand([7,8], inf),
 		\degree, Prand([0,3,4,5,7], inf),
@@ -177,7 +178,7 @@ Pdef(\chirping_sparrow,
 Pdef(\yellow_warbler,
 	Pbind(
 		\instrument, \dummy,
-		\dur, Prand([0.5, 1, 4, 8], inf),
+		\dur, Pdef(\bird_durs),
 		\root, 0,
 		\octave, Prand([7,8,9], inf),
 		\degree, Prand([0,3,4,5,7], inf),
@@ -299,7 +300,7 @@ Pdef(\yellow_warbler,
 Pdef(\orchard_oriele,
 	Pbind(
 		\instrument, \dummy,
-		\dur, Prand([0.5, 1, 4, 8], inf),
+		\dur, Pdef(\bird_durs),
 		\root, 0,
 		\octave, Prand([6,7,8], inf),
 		\degree, Prand([0,3,4,5,7], inf),
@@ -499,7 +500,7 @@ Pdef(\orchard_oriele,
 Pdef(\cassins_kingbird,
 	Pbind(
 		\instrument, \dummy,
-		\dur, Prand([0.5, 1, 4, 8], inf),
+		\dur, Pdef(\bird_durs),
 		\root, 0,
 		\octave, Prand([6,7], inf),
 		\degree, Prand([0,3,4,5,7], inf),
@@ -556,3 +557,12 @@ Pdef(\cassins_kingbird,
 	)
 ).play;
 );
+
+
+
+
+/*
+
+FROM:
+"http://new-supercollider-mailing-lists-forums-use-these.2681727.n2.nabble.com/Arrays-as-SynthDef-arguments-for-the-birds-tp7061974p7104917.html"
+*/

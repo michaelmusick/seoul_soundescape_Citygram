@@ -20,7 +20,7 @@ Notes: Handles the mixing and managment of the three voice layers
 ~main.rsdHistFull = false;
 ~main.maxRSDs = 0;
 ~main.minRSDs = 1000000;
-
+(
 OSCdef(\updateMix, {
 	|msg, time, addr|
 
@@ -32,7 +32,7 @@ OSCdef(\updateMix, {
 
 	if( ~cgGroupData[ptr][\activeRSDs].notNil, {
 		activeRSDs = ~cgGroupData[ptr][\activeRSDs];
-		("active RSDs: " + activeRSDs).postln;
+		// ("active RSDs: " + activeRSDs).postln;
 
 		~main.rsdHist.put(~main.rsdHistIdx, activeRSDs);
 
@@ -57,7 +57,7 @@ OSCdef(\updateMix, {
 
 		// ADJUST MIX FOR POS?NEUT?NEG
 		mixVal = activeRSDs.linlin(~main.minRSDs, ~main.maxRSDs, 0, 1);
-		// mixVal.postln;
+		mixVal.postln;
 
 		pos  = mixVal.linlin( 0.5, 1, 0, 1, \minmax );
 		neut = (mixVal.clip(0.2,0.6).linlin(0.3,0.7,0,1) * pi).sin.clip(0,1);
@@ -70,7 +70,12 @@ OSCdef(\updateMix, {
 \newDataReady,
 NetAddr.localAddr
 );
+);
 
+/*
+
+~main.mainOut.get(\negLevel, {|val| val.postln;});
+*/
 
 "starting main out".postln;
 ~main.mainOut = SynthDef(\mixerSynth, {

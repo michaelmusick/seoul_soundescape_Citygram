@@ -22,11 +22,14 @@ SynthDef(\windchime, {
     );
 
 	rate = XLine.kr(init_rate, 0.01, sustain);
+
+	impulse = Impulse.ar(0.1);
 	impulse = Decay.ar(
-        Dust.ar(rate),
+        impulse,
         0.03,
         ClipNoise.ar(0.01)
     );
+
 
 	impulse = CombC.ar(
 		impulse,
@@ -68,31 +71,19 @@ SynthDef(\windchime, {
 Pdef(\windchimes,
 	Pbind(
 		\instrument, \windchime,
-		// do not go above oct=>5
-		\octave, 3,
 		\root, 0,
+		\octave, 3,
 		\degree, Prand([0,3,4,5,7], inf),
-		\dur, Prand(
-			[
-				Pseq([2,8,2],1),
-				Pseq([1,3],1),
-				Pseq([3,1],1),
-				Pseq([1,2,1],1),
-				Pseq([1,1,0.5,0.5,1],1),
-				Pseq([2],2),
-				Pseq([1],2),
-				Pseq([2],4),
-				Pseq([4],1),
-				Pseq([4],2),
-				Pseq([8],1),
-			],
-			inf
-		),
-		\init_rate, Pwhite(0.01, 20, inf),
+		\freq, Pfunc { |ev| ev.use(ev[\freq]) },
+		\dur, Pdef(\chimePatterns),
+		\init_rate, Pwhite(0.01, 4, inf),
 		\sustain, 3,
-		// \db, Pexprand( -24, -1, inf)
-		\db, Pbrown( -24, -1, 0.5, inf),
-		\out, ~main.posBus
+		\db, Pdef(\midChime_db),
+		\amp, Pfunc { |ev| ev.use(ev[\amp]) },
+		\out, ~main.posBus,
+		// \blah, Pfuncn({ |ev| ev.postln; }, inf)
+
+
 	)
 ).play;
 );
