@@ -61,7 +61,7 @@ OSCdef(\updateMix, {
 
 		// ADJUST MIX FOR POS?NEUT?NEG
 		mixVal = activeRSDs.linlin(~main.minRSDs, ~main.maxRSDs, 0, 1);
-		mixVal.postln;
+		// mixVal.postln;
 
 		pos  = mixVal.linlin(
 			~main.posRange[0], ~main.posRange[1],
@@ -82,9 +82,9 @@ OSCdef(\updateMix, {
 		) * pi ).sin.clip(0,1);
 		~main.mainOut.set(\posLevel, pos, \neutLevel, neut, \negLevel, neg);
 
-		("pos: "+pos).postln;
-		("neut: "+neut).postln;
-		("neg: "+neg).postln;
+		// ("pos: "+pos).postln;
+		// ("neut: "+neut).postln;
+		// ("neg: "+neg).postln;
 	});
 
 
@@ -99,7 +99,7 @@ NetAddr.localAddr
 ~main.mainOut.get(\negLevel, {|val| val.postln;});
 */
 
-"starting main out".postln;
+// "starting main out".postln;
 ~main.mainOut = SynthDef(\mixerSynth, {
 	arg neutIn, posIn, negIn, out = 0, neutLevel = 0.3, posLevel = 0.3, negLevel = 0.3, lagTime = 2;
 

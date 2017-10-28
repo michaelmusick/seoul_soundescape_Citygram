@@ -47,30 +47,30 @@ Main File and System Variables
 	LOAD ALL OTHER FILES
 	*********************************************/
 
-	"about to load files".postln;
+	// "about to load files".postln;
 	4.0.wait;
 
-	"Loading Neutral Layer".postln;
+	// "Loading Neutral Layer".postln;
 	(~thisPath +/+ "neutral/*.scd").loadPaths;
 	10.0.wait;
 
-	"Loading Negative Layer".postln;
+	// "Loading Negative Layer".postln;
 	(~thisPath +/+ "negative/*.scd").loadPaths;
 	10.0.wait;
 
-	"Loading Positive Layer".postln;
+	// "Loading Positive Layer".postln;
 	(~thisPath +/+ "positive/*.scd").loadPaths;
 	10.0.wait;
 
-	"Loading Main Mixer".postln;
+	// "Loading Main Mixer".postln;
 	(~thisPath +/+ "mainMix/*.scd").loadPaths;
 	2.0.wait;
 
-	"Loading CG_Bridge".postln;
+	// "Loading CG_Bridge".postln;
 	(~thisPath +/+ "cg_bridge.scd").loadPaths;
 	2.0.wait;
 
-	"Loading Recovery Loop".postln;
+	// "Loading Recovery Loop".postln;
 	(~thisPath +/+ "recovery.scd").loadPaths;
 }.fork;
 )

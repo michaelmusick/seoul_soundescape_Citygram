@@ -159,7 +159,7 @@ Pdef(\chirping_sparrow,
 						0.01.wait;
 				})}).start; // play it!
 			}, {
-				"cpu too high!".postln;
+				// "cpu too high!".postln;
 			}
 			);
 
@@ -279,7 +279,7 @@ Pdef(\yellow_warbler,
 					]);
 				}).start;
 			}, {
-				"cpu too high!".postln;
+				// "cpu too high!".postln;
 			}
 			);
 		}, inf)
@@ -482,7 +482,7 @@ Pdef(\orchard_oriele,
 					]);
 				}).start;
 			}, {
-				"cpu too high!".postln;
+				// "cpu too high!".postln;
 			}
 			);
 		}, inf)
@@ -550,7 +550,7 @@ Pdef(\cassins_kingbird,
 					]);
 				}).start;
 			}, {
-				"cpu too high!".postln;
+				// "cpu too high!".postln;
 			}
 			);
 		}, inf)
