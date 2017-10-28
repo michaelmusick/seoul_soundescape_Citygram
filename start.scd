@@ -19,6 +19,9 @@ Notes:
 // Buffer.freeAll;
 o = Server.default.options;
 o.memSize = 2**19;
+
+o.verbosity = -2;
+
 // o.numInputBusChannels  = 1;
 // o.numOutputBusChannels = 1;
 // o.numBuffers = 4096;

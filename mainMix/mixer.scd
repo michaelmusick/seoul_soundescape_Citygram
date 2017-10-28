@@ -13,8 +13,8 @@ Notes: Handles the mixing and managment of the three voice layers
 **************************************************************/
 
 
-~main.negRange = [0,0.2];
-~main.neutRange = [0.1,0.65];
+~main.negRange = [0,0.35];
+~main.neutRange = [0.1,0.6];
 ~main.posRange = [0.5,1.0];
 
 // memory length, in mins
