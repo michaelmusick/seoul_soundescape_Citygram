@@ -6,7 +6,7 @@
 
 TempoClock.default.tempo = 88/60;
 
-
+Pdef(\scale, Prand([0,3,4,5,7], inf));
 
 
 // =====================================================
@@ -22,6 +22,10 @@ Pdef(\bird_durs, Pwrand(
 	[ 0.1, 0.1, 0.3, 1.1, 2.0, 1.7 ].normalizeSum,
 	inf)
 );
+
+// =====================================================
+// Some Chime Variables
+// =====================================================
 
 // Mix values for Chimes
 Pdef(\highChime_db, Pbrown( -18, -3, 3, inf));

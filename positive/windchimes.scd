@@ -73,13 +73,25 @@ Pdef(\windchimes,
 		\instrument, \windchime,
 		\root, 0,
 		\octave, 3,
-		\degree, Prand([0,3,4,5,7], inf),
+		\degree, Pdef(\scale),
 		\freq, Pfunc { |ev| ev.use(ev[\freq]) },
 		\dur, Pdef(\chimePatterns),
 		\init_rate, Pwhite(0.01, 4, inf),
 		\sustain, 3,
 		\db, Pdef(\midChime_db),
 		\amp, Pfunc { |ev| ev.use(ev[\amp]) },
+		\type, Pfuncn({
+			|event|
+			if( (
+				(s.peakCPU < ~main.maxPeakCPU) &&
+				(s.avgCPU < ~main.maxAvgCPU)
+			),
+			{
+				\note
+			}, {
+				\rest
+			});
+		}, inf),
 		\out, ~main.posBus,
 		// \blah, Pfuncn({ |ev| ev.postln; }, inf)
 

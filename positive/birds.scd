@@ -130,7 +130,7 @@ Pdef(\chirping_sparrow,
 		\dur, Pdef(\bird_durs),
 		\root, 0,
 		\octave, Prand([7,8], inf),
-		\degree, Prand([0,3,4,5,7], inf),
+		\degree, Pdef(\scale),
 		\freq, Pfunc { |ev| ev.use(ev[\freq]) },
 
 		\der, Pfuncn({
@@ -181,7 +181,7 @@ Pdef(\yellow_warbler,
 		\dur, Pdef(\bird_durs),
 		\root, 0,
 		\octave, Prand([7,8,9], inf),
-		\degree, Prand([0,3,4,5,7], inf),
+		\degree, Pdef(\scale),
 		\freq, Pfunc { |ev| ev.use(ev[\freq]) },
 
 		\der, Pfuncn({
@@ -303,7 +303,7 @@ Pdef(\orchard_oriele,
 		\dur, Pdef(\bird_durs),
 		\root, 0,
 		\octave, Prand([6,7,8], inf),
-		\degree, Prand([0,3,4,5,7], inf),
+		\degree, Pdef(\scale),
 		\freq, Pfunc { |ev| ev.use(ev[\freq]) },
 
 		\der, Pfuncn({
@@ -503,7 +503,7 @@ Pdef(\cassins_kingbird,
 		\dur, Pdef(\bird_durs),
 		\root, 0,
 		\octave, Prand([6,7], inf),
-		\degree, Prand([0,3,4,5,7], inf),
+		\degree, Pdef(\scale),
 		\freq, Pfunc { |ev| ev.use(ev[\freq]) },
 
 		\der, Pfuncn({

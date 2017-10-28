@@ -36,13 +36,25 @@ Pdef(\woodchimes,
 		\instrument, \woodBlock,
 		\root, 0,
 		\octave, Pwhite(4,5,inf),
-		\degree, Prand([0,3,4,5,7], inf),
+		\degree, Pdef(\scale),
 		\freq, Pfunc { |ev| ev.use(ev[\freq]) },
-		\dur, Pdef(\chimePatterns),
+		\dur, 1,
 		\sustain, 1,
 		\db, Pdef(\woodChime_db),
 		\amp, Pfunc { |ev| ev.use(ev[\amp]) },
 		// \type, Pwrand([\note, \rest], [0.5, 0.5], inf),
+		\type, Pfuncn({
+			|event|
+			if( (
+				(s.peakCPU < ~main.maxPeakCPU) &&
+				(s.avgCPU < ~main.maxAvgCPU)
+			),
+			{
+				\note
+			}, {
+				\rest
+			});
+		}, inf),
 		\out, ~main.posBus,
 		// \blah, Pfuncn({ |ev| ev.postln; }, inf)
 
@@ -50,4 +62,6 @@ Pdef(\woodchimes,
 );
 );
 
-
+/*
+Pdef(\woodchimes).play;
+*/
