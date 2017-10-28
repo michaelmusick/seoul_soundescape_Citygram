@@ -2,7 +2,7 @@
 	inf.do({
 		if( (s.serverRunning.not || s.unresponsive), {
 			{
-				"stopped, trying to restart".postln;
+				// "stopped, trying to restart".postln;
 				~routineGliss.stop;
 				~main.serverCheck.stop;
 				Pdef.removeAll;

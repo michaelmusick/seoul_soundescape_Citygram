@@ -33,18 +33,18 @@ if( ~platform == \rpi, {
 	// ~thisPath = Document.current.dir;
 });
 
-~thisPath.postln;
+// ~thisPath.postln;
 
 
 {
-	"\ngetting ready to boot\n".postln;
+	// "\ngetting ready to boot\n".postln;
 	s.boot;
-	"waiting 30 seconds for things to calm down\n\n".postln;
+	// "waiting 30 seconds for things to calm down\n\n".postln;
 	if(~platform != \osx, {
 		30.wait;
 	});
 	s.doWhenBooted({
-		"\n\nTest the system\n".postln;
+		// "\n\nTest the system\n".postln;
 		(~test = {
 			Mix(
 				SinOsc.ar([400, 404], mul: 0.1)
