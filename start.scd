@@ -30,7 +30,8 @@ Platform.case(
 if( ~platform == \rpi, {
 	~thisPath = "/home/pi/seoul_CG/";
 }, {
-	~thisPath = Document.current.dir;
+	// ~thisPath = Document.current.dir;
+	~thisPath = "/Users/musick/creative_git/sound-e-scape/";
 });
 
 // ~thisPath.postln;
