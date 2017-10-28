@@ -30,7 +30,7 @@ Platform.case(
 if( ~platform == \rpi, {
 	~thisPath = "/home/pi/seoul_CG/";
 }, {
-	// ~thisPath = Document.current.dir;
+	~thisPath = Document.current.dir;
 });
 
 // ~thisPath.postln;

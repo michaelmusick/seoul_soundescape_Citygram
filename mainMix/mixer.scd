@@ -98,10 +98,17 @@ NetAddr.localAddr
 
 ~main.mainOut.get(\negLevel, {|val| val.postln;});
 */
-
+(
 // "starting main out".postln;
 ~main.mainOut = SynthDef(\mixerSynth, {
-	arg neutIn, posIn, negIn, out = 0, neutLevel = 0.3, posLevel = 0.3, negLevel = 0.3, lagTime = 2;
+	arg neutIn, posIn, negIn, out = 0,
+	lagTime = 2,
+	neutLevel = 0.3,
+	posLevel = 0.3,
+	negLevel = 0.3,
+	posLev_ = 2,
+	neutLev_ = 2,
+	negLev_ = 1;
 
 	var posSig, neutSig, negSig, mainSig;
 
@@ -116,9 +123,9 @@ NetAddr.localAddr
 	neutLevel = neutLevel.lag(lagTime);
 
 	// mix signals
-	posSig  = posSig  * posLevel.sqrt;
-	neutSig = neutSig * neutLevel.sqrt;
-	negSig  = negSig  * negLevel.sqrt;
+	posSig  = posSig *posLev_  * posLevel.sqrt;
+	neutSig = neutSig * neutLev_ * neutLevel.sqrt;
+	negSig  = negSig * negLev_  * negLevel.sqrt;
 
 	mainSig = Mix([ posSig, neutSig, negSig ]);
 
@@ -135,3 +142,14 @@ NetAddr.localAddr
 ],
 addAction: \addToTail
 );
+);
+
+
+/*
+~main.mainOut.free
+~main.mainOut.set(\posLevel, 0, \negLevel, 0, \neutLevel, 1)
+~main.mainOut.set(\posLev_)
+
+
+
+*/
