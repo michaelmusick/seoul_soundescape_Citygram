@@ -176,6 +176,8 @@ thisProcess.removeOSCRecvFunc(~cg_data_func);
 
 			// increment data pointer
 			~dataPtr = (~dataPtr + 1) % ~cgData.size;
+			~cgData[~dataPtr] = ();
+
 		},
 
 		/* General OSC Data Handling */

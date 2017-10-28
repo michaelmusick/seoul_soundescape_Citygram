@@ -36,7 +36,7 @@ OSCdef(\updateMix, {
 
 	if( ~cgGroupData[ptr][\activeRSDs].notNil, {
 		activeRSDs = ~cgGroupData[ptr][\activeRSDs];
-		// ("active RSDs: " + activeRSDs).postln;
+
 
 		~main.rsdHist.put(~main.rsdHistIdx, activeRSDs);
 
@@ -61,7 +61,7 @@ OSCdef(\updateMix, {
 
 		// ADJUST MIX FOR POS?NEUT?NEG
 		mixVal = activeRSDs.linlin(~main.minRSDs, ~main.maxRSDs, 0, 1);
-		// mixVal.postln;
+
 
 		pos  = mixVal.linlin(
 			~main.posRange[0], ~main.posRange[1],
@@ -82,6 +82,8 @@ OSCdef(\updateMix, {
 		) * pi ).sin.clip(0,1);
 		~main.mainOut.set(\posLevel, pos, \neutLevel, neut, \negLevel, neg);
 
+		// ("active RSDs: " + activeRSDs).postln;
+		// mixVal.postln;
 		// ("pos: "+pos).postln;
 		// ("neut: "+neut).postln;
 		// ("neg: "+neg).postln;
