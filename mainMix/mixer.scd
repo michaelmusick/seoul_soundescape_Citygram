@@ -13,8 +13,8 @@ Notes: Handles the mixing and managment of the three voice layers
 **************************************************************/
 
 
-~main.negRange = [0,0.35];
-~main.neutRange = [0.1,0.6];
+~main.negRange = [0,0.3];
+~main.neutRange = [0.15,0.5];
 ~main.posRange = [0.5,1.0];
 
 // memory length, in mins
@@ -134,6 +134,8 @@ NetAddr.localAddr
 	// any signal processing for mastering, goes here
 
 	mainSig = HPF.ar(mainSig, 130);
+
+	mainSig = mainSig * 3.dbamp;
 
 
 	mainSig = Limiter.ar( mainSig, 0.99, 0.01 );

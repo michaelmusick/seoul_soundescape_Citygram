@@ -19,7 +19,7 @@ Pdef(\scale, Prand([0,3,4,5,7], inf));
 // duration pdef
 Pdef(\bird_durs, Pwrand(
 	[ 1,   2,   4,   8,   16,  32  ],
-	[ 0.1, 0.1, 0.3, 1.1, 2.0, 1.7 ].normalizeSum,
+	[ 0.1, 0.1, 0.3, 1.1, 2.0, 1.0 ].normalizeSum,
 	inf)
 );
 

@@ -1,4 +1,4 @@
-/******************************************************************
+``/******************************************************************
 BIRDS
 ******************************************************************/
 
@@ -131,9 +131,9 @@ Pdef(\chirping_sparrow,
 		\root, 0,
 		\octave, Prand([7,8], inf),
 		\degree, Pdef(\scale),
-		\freq, Pfunc { |ev| ev.use(ev[\freq]) },
+		\freq, Pfuncn( { |ev| ev.use(ev[\freq]) }, inf),
 
-		\der, Pfuncn({
+		\type, Pfuncn({
 			|event|
 			var freq = event[\freq];
 			var pan = rrand(-1, 1);
@@ -158,8 +158,10 @@ Pdef(\chirping_sparrow,
 						]);
 						0.01.wait;
 				})}).start; // play it!
+				\note
 			}, {
 				// "cpu too high!".postln;
+				\rest
 			}
 			);
 
@@ -182,9 +184,9 @@ Pdef(\yellow_warbler,
 		\root, 0,
 		\octave, Prand([7,8,9], inf),
 		\degree, Pdef(\scale),
-		\freq, Pfunc { |ev| ev.use(ev[\freq]) },
+		\freq, Pfuncn( { |ev| ev.use(ev[\freq]) }, inf),
 
-		\der, Pfuncn({
+		\type, Pfuncn({
 			|event|
 			if( ((s.peakCPU < ~main.maxPeakCPU) && (s.avgCPU < ~main.maxAvgCPU)), {
 				var freq = event[\freq];
@@ -278,8 +280,10 @@ Pdef(\yellow_warbler,
 						\out, ~main.posBus
 					]);
 				}).start;
+				\note
 			}, {
 				// "cpu too high!".postln;
+				\rest
 			}
 			);
 		}, inf)
@@ -304,9 +308,9 @@ Pdef(\orchard_oriele,
 		\root, 0,
 		\octave, Prand([6,7,8], inf),
 		\degree, Pdef(\scale),
-		\freq, Pfunc { |ev| ev.use(ev[\freq]) },
+		\freq, Pfuncn( { |ev| ev.use(ev[\freq]) }, inf),
 
-		\der, Pfuncn({
+		\type, Pfuncn({
 			|event|
 			if( ((s.peakCPU < ~main.maxPeakCPU) && (s.avgCPU < ~main.maxAvgCPU)), {
 				var freq = event[\freq];
@@ -481,8 +485,10 @@ Pdef(\orchard_oriele,
 						\out, ~main.posBus
 					]);
 				}).start;
+				\note
 			}, {
 				// "cpu too high!".postln;
+				\rest
 			}
 			);
 		}, inf)
@@ -504,9 +510,9 @@ Pdef(\cassins_kingbird,
 		\root, 0,
 		\octave, Prand([6,7], inf),
 		\degree, Pdef(\scale),
-		\freq, Pfunc { |ev| ev.use(ev[\freq]) },
+		\freq, Pfuncn( { |ev| ev.use(ev[\freq]) }, inf),
 
-		\der, Pfuncn({
+		\type, Pfuncn({
 			|event|
 			if( ((s.peakCPU < ~main.maxPeakCPU) && (s.avgCPU < ~main.maxAvgCPU)), {
 				var freq = event[\freq];
@@ -549,8 +555,10 @@ Pdef(\cassins_kingbird,
 						\out, ~main.posBus
 					]);
 				}).start;
+				\note
 			}, {
 				// "cpu too high!".postln;
+				\rest
 			}
 			);
 		}, inf)
