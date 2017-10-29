@@ -58,7 +58,10 @@ if( ~platform == \rpi, {
 
 
 		(~thisPath +/+ "/main.scd").loadPaths;
-	});
+	},
+	limit: 100,
+	onFailure: {0.exit;}
+	);
 }.fork;
 
 );
