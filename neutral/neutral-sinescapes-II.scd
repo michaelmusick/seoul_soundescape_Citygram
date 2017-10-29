@@ -67,7 +67,7 @@ SynthDef.new("Sinescape",
 SynthDef.new("sinGliss",
 	{
 		arg outBus = 0, effectBus, impulseFreq = 0.1,
-		ampMaster = 0.2, freq = 220, freqDecay = 200, hardLev = 1.5;
+		ampMaster = 0.2, freq = 220, freqDecay = 200, hardLev = 1.0;
 		var imp, sig, direct = 0.5, attackTime = 0.1, decayTime = 1;
 
 		imp = EnvGen.kr(Env.perc, 2.0, doneAction: 2)*SinOsc.ar([freq, freq*2, freq*3],0,0.1);
@@ -76,6 +76,7 @@ SynthDef.new("sinGliss",
 			SinOsc.ar(SinOsc.kr(0.01, 0, 110, freqDecay)));
 		sig = Mix(sig) * hardLev;
 		sig = Pan2.ar(sig, 0);
+		sig = Limiter.ar(sig, 0.99);
 		Out.ar(outBus, sig*direct*ampMaster);
 		Out.ar(effectBus, sig*(1-direct)*ampMaster);
 }).add(completionMsg: NetAddr.localAddr.sendMsg(\startNeutral, 1); );
@@ -112,9 +113,12 @@ SynthDef.new("myReverb",
 		delta = rrand(4.0, 20.0);
 		delta.yield;
 
-		freqRand = 1000.0.rand + 20.0;
+		if( ~voice==0, {
+			freqRand = 1000.0.rand + 20.0;
+		}, {
+			freqRand = 120.0.rand + 20;
+		});
 		// "Gliss trigger ".post; delta.postln;
-		//~synthGliss.set("impulseFreq", 0.001+(1.0.rand)/4);
 		if( (
 			(s.peakCPU < ~main.maxPeakCPU) &&
 			(s.avgCPU < ~main.maxAvgCPU)
@@ -122,7 +126,8 @@ SynthDef.new("myReverb",
 		{
 			Synth.before(~synthReverb, "sinGliss", [
 				effectBus: ~bussMix, outBus: ~main.neutralBus,
-				freq: freqRand, freqDecay: freqRand
+				freq: freqRand, freqDecay: freqRand,
+				impulseFreq: 0.001+(1.0.rand)/4
 			]);
 		});
 	}
@@ -160,17 +165,28 @@ OSCdef(\startNeutral, {
 			outBus: ~main.neutralBus
 		]);
 
-		~synthDrops    = Synth.before(~synthReverb, "Sinescape", [
-			effectBus: ~bussMix,
-			outBus: ~main.neutralBus,
-			bwFreqStart: 120, density: 2, amp: 0.8
-		]);
+		if( ~voice==0, {
+			~synthDrops    = Synth.before(~synthReverb, "Sinescape", [
+				effectBus: ~bussMix,
+				outBus: ~main.neutralBus,
+				bwFreqStart: 120, density: 2, amp: 0.8
+			]);
+		});
 
-		~synthAmbiance = Synth.before(~synthReverb, "Sinescape", [
-			effectBus: ~bussMix,
-			outBus: ~main.neutralBus,
-			bwFreqStart: 8, density: 1, direct: 0.2, amp: 100
-		]);
+		if( ~voice==0, {
+			~synthAmbiance = Synth.before(~synthReverb, "Sinescape", [
+				effectBus: ~bussMix,
+				outBus: ~main.neutralBus,
+				bwFreqStart: 8, density: 1, direct: 0.2, amp: 100
+			]);
+		});
+		if( ~voice==1, {
+			~synthAmbiance = Synth.before(~synthReverb, "Sinescape", [
+				effectBus: ~bussMix,
+				outBus: ~main.neutralBus,
+				bwFreqStart: 8, density: 1, direct: 0.7, amp: 100
+			]);
+		});
 
 		// ~synthGliss    = Synth.before(~synthReverb, "sinGliss", [
 		// 	effectBus: ~bussMix,
@@ -185,6 +201,11 @@ NetAddr.localAddr
 );
 
 
+);
 
 
-)
+/*
+~synthDrops.set(\bwFreqStart, 120, \amp, 0.8)
+~synthAmbiance.set(\bwFreqStart, 8, \direct, 0.7, \amp, 100)
+
+*/

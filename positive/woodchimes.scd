@@ -70,38 +70,76 @@ SynthDef(\saw_accent, {
 
 
 (
-Pdef(\woodchimes,
-	Pbind(
-		// \instrument, \saw_accent,
-		// \instrument, \woodBlock,
-		\instrument, Pfunc { [\saw_accent, \woodBlock].choose },
-		\root, 0,
-		\octave, Pwhite(4,5,inf),
-		\degree, Pdef(\scale),
-		\freq, Pfunc { |ev| ev.use(ev[\freq]) },
-		\ffreq, 1000,
-		\dur, Pdef(\chimePatterns),
-		\sustain, 2,
-		\db, Pdef(\woodChime_db),
-		\amp, Pfunc { |ev| ev.use(ev[\amp]) },
-		// \type, Pwrand([\note, \rest], [0.5, 0.5], inf),
-		\type, Pfuncn({
-			|event|
-			if( (
-				(s.peakCPU < ~main.maxPeakCPU) &&
-				(s.avgCPU < ~main.maxAvgCPU)
-			),
-			{
-				\note
-			}, {
-				\rest
-			});
-		}, inf),
-		\out, ~main.posBus,
-		// \blah, Pfuncn({ |ev| ev.postln; }, inf)
 
-	)
-);
+if( ~voice==0, {
+	Pdef(\woodchimes,
+		Pbind(
+			// \instrument, \saw_accent,
+			// \instrument, \woodBlock,
+			\instrument, Pfunc { [\saw_accent, \woodBlock].choose },
+			\root, 0,
+			\octave, Prand([4,5], inf),
+			\degree, Pdef(\scale),
+			\freq, Pfunc { |ev| ev.use(ev[\freq]) },
+			\ffreq, 1000,
+			\dur, Pdef(\chimePatterns),
+			\sustain, 2,
+			\db, Pdef(\woodChime_db),
+			\amp, Pfunc { |ev| ev.use(ev[\amp]) },
+			// \type, Pwrand([\note, \rest], [0.5, 0.5], inf),
+			\type, Pfuncn({
+				|event|
+				if( (
+					(s.peakCPU < ~main.maxPeakCPU) &&
+					(s.avgCPU < ~main.maxAvgCPU)
+				),
+				{
+					\note
+				}, {
+					\rest
+				});
+			}, inf),
+			\out, ~main.posBus,
+			// \blah, Pfuncn({ |ev| ev.postln; }, inf)
+
+		)
+	);
+});
+
+if( ~voice==1, {
+	Pdef(\woodchimes,
+		Pbind(
+			// \instrument, \saw_accent,
+			// \instrument, \woodBlock,
+			\instrument, Pfunc { [\saw_accent, \woodBlock].choose },
+			\root, 0,
+			\octave, Prand([3,4], inf),
+			\degree, Pdef(\scale),
+			\freq, Pfunc { |ev| ev.use(ev[\freq]) },
+			\ffreq, 1000,
+			\dur, Pdef(\chimePatterns),
+			\sustain, 2,
+			\db, Pdef(\woodChime_db),
+			\amp, Pfunc { |ev| ev.use(ev[\amp]) },
+			// \type, Pwrand([\note, \rest], [0.5, 0.5], inf),
+			\type, Pfuncn({
+				|event|
+				if( (
+					(s.peakCPU < ~main.maxPeakCPU) &&
+					(s.avgCPU < ~main.maxAvgCPU)
+				),
+				{
+					\note
+				}, {
+					\rest
+				});
+			}, inf),
+			\out, ~main.posBus,
+			// \blah, Pfuncn({ |ev| ev.postln; }, inf)
+
+		)
+	);
+});
 );
 
 /*

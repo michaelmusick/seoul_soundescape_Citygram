@@ -23,6 +23,8 @@ o.memSize = 2**19;
 // post verbosity
 o.verbosity = -2;
 
+~voice = 0;
+// ~voice = 1;
 
 ~platform = \rpi;
 Platform.case(
@@ -45,12 +47,20 @@ if( ~platform == \rpi, {
 		30.wait;
 	});
 	s.doWhenBooted({
-		// "\n\nTest the system\n".postln;
-		(~test = {
-			Mix(
+
+		if( ~voice==0, {
+			// "\n\nTest the system\n".postln;
+			(~test = {
 				SinOsc.ar([400, 404], mul: 0.1)
-			) * Linen.kr(Impulse.kr(0), doneAction: 2)
-		}.play;);
+				* Linen.kr(Impulse.kr(0), doneAction: 2)
+			}.play;);
+		}, {
+			(~test = {
+
+				SinOsc.ar([80, 70], mul: 0.1)
+				* Linen.kr(Impulse.kr(0), doneAction: 2)
+			}.play;);
+		});
 		2.wait;
 		// 7.wait;
 

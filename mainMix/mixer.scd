@@ -136,7 +136,13 @@ NetAddr.localAddr
 
 	// any signal processing for mastering, goes here
 
-	mainSig = HPF.ar(mainSig, 130);
+	if( ~voice==0, {
+		mainSig = HPF.ar(mainSig, 130);
+	});
+	if( ~voice==1, {
+		mainSig = HPF.ar(mainSig, 20);
+		mainSig = LPF.ar( mainSig, freq: 120 );
+	});
 
 	mainSig = mainSig * 3.dbamp;
 
@@ -160,6 +166,7 @@ addAction: \addToTail
 ~main.mainOut.set(\posLevel, 1, \negLevel, 0, \neutLevel, 0)
 ~main.mainOut.set(\posLevel, 0, \negLevel, 0, \neutLevel, 1)
 ~main.mainOut.set(\posLevel, 0, \negLevel, 1, \neutLevel, 0)
+~main.mainOut.set(\posLevel, 1, \negLevel, 1, \neutLevel, 1)
 ~main.mainOut.set(\posLev_)
 
 ~main.maxRSDs.postln;

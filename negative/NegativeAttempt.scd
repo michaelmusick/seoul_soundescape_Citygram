@@ -17,7 +17,7 @@
 
 ]);*/
 
-
+(
 //ExFunction2a: Impulse using array as argument
 ~neg2 = SynthDef(\neg2, {
 	arg out = 0, amp = 0.01;
@@ -33,13 +33,26 @@
 	).tanh/2;
 
 
-	sig = sig * LFNoise1.kr(LFNoise1.kr(1).linlin(-1,1,0,4)).linlin(-1,1,0,1).clip(0,1);
+	sig = sig *
+	LFNoise1.kr(
+		LFNoise1.kr(1).linlin(-1,1,0,4)
+	).linlin(-1,1,0,1).clip(0,1);
+
+	if( ~voice==0, {
+		sig = LPF.ar(sig, 20000);
+		sig = HPF.ar(sig, 100);
+	});
+	if( ~voice==1, {
+		sig = HPF.ar(sig, 20);
+		sig = LPF.ar(sig, 130);
+		sig = sig * 2;
+	});
 	sig = sig * amp;
 	Out.ar(out, sig);
 }).play( args: [
 	\out, ~main.negBus
 ]);
-
+);
 
 /*
 ~neg2.free
