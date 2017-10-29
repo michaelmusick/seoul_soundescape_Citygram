@@ -33,12 +33,18 @@
 	).tanh/2;
 
 
-	// sig = sig * LFNoise1.kr(LFNoise1.kr(1).linlin(-1,1,0,4)).linlin(-1,1,0,1).clip(0,1);
+	sig = sig * LFNoise1.kr(LFNoise1.kr(1).linlin(-1,1,0,4)).linlin(-1,1,0,1).clip(0,1);
 	sig = sig * amp;
 	Out.ar(out, sig);
 }).play( args: [
 	\out, ~main.negBus
 ]);
+
+
+/*
+~neg2.free
+
+*/
 
 
 //Exfunction2b: Impulse using variable control value as argument (here, MouseX)

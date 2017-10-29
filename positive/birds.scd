@@ -136,7 +136,8 @@ Pdef(\chirping_sparrow,
 		\type, Pfuncn({
 			|event|
 			var freq = event[\freq];
-			var pan = rrand(-1, 1);
+			var pan = rrand(-1.0, 1.0);
+			var randAmp = rand(1.0);
 
 
 			// original chip-up freq-envelope from bill
@@ -149,7 +150,7 @@ Pdef(\chirping_sparrow,
 						x = Synth("billbird", [
 							\t_gate, 1, \pan, pan,
 							\out, ~main.posBus,
-							\amp, 0.05 * ~main.birdAmp,
+							\amp, 0.05 * ~main.birdAmp * randAmp,
 							\freqenv, freqenv,
 							\freqskew, 2400,
 							\freq, freq,
@@ -190,8 +191,11 @@ Pdef(\yellow_warbler,
 			|event|
 			if( ((s.peakCPU < ~main.maxPeakCPU) && (s.avgCPU < ~main.maxAvgCPU)), {
 				var freq = event[\freq];
-				var pan = rrand(-1, 1);
+				var pan = rrand(-1.0, 1.0);
+				var randAmp = rand(1.0);
+
 				var warblerTask;
+
 				var yellow_up, yellow_up_bill = [0, 0, 0.6, 1, 1, 0.5];
 				var yellow_swirl, yellow_swirl_bill = [0, 1, 0.05, 1, 0.6, 0, 0.8, 0.3,
 					1, 0.1];
@@ -216,42 +220,48 @@ Pdef(\yellow_warbler,
 
 					Synth("billbird", [
 						\dur, 0.05, \freq, freq*1.12, \freqskew, 400,
-						\amp, 0.05 * ~main.birdAmp, \freqenv, yellow_up,
+						\amp, 0.05 * ~main.birdAmp * randAmp,
+						\freqenv, yellow_up,
 						\ampenv, main_amp, \t_gate, 1, \pan, pan,
 						\out, ~main.posBus
 					]);
 					yel_t[1].wait;
 					Synth("billbird", [
-						\dur, 0.12, \freq, freq, \freqskew,
-						1500, \amp, 0.15 * ~main.birdAmp, \freqenv, yellow_swirl,
+						\dur, 0.12, \freq, freq, \freqskew, 1500,
+						\amp, 0.15 * ~main.birdAmp * randAmp,
+						\freqenv, yellow_swirl,
 						\ampenv, swirl_amp, \t_gate, 1, \pan, pan,
 						\out, ~main.posBus
 					]);
 					yel_t[2].wait;
 					Synth("billbird", [
-						\dur, 0.13, \freq, freq, \freqskew,
-						1700, \amp, 0.17 * ~main.birdAmp, \freqenv, yellow_swirl,
+						\dur, 0.13, \freq, freq, \freqskew, 1700,
+						\amp, 0.17 * ~main.birdAmp * randAmp,
+						\freqenv, yellow_swirl,
 						\ampenv, swirl_amp, \t_gate, 1, \pan, pan,
 						\out, ~main.posBus
 					]);
 					yel_t[3].wait;
 					Synth("billbird", [
-						\dur, 0.16, \freq, freq, \freqskew,
-						2000, \amp, 0.20, \freqenv, yellow_swirl,
+						\dur, 0.16, \freq, freq, \freqskew, 2000,
+						\amp, 0.20 * ~main.birdAmp * randAmp,
+						\freqenv, yellow_swirl,
 						\ampenv, swirl_amp, \t_gate, 1, \pan, pan,
 						\out, ~main.posBus
 					]);
 					yel_t[4].wait;
 					Synth("billbird", [
-						\dur, 0.15, \freq, freq, \freqskew,
-						2000, \amp, 0.20 * ~main.birdAmp, \freqenv, yellow_swirl,
+						\dur, 0.15, \freq, freq, \freqskew, 2000,
+						\amp, 0.20 * ~main.birdAmp * randAmp,
+						\freqenv, yellow_swirl,
 						\ampenv, swirl_amp, \t_gate, 1, \pan, pan,
 						\out, ~main.posBus
 					]);
 					yel_t[5].wait;
 					Synth("billbird", [
 						\dur, 0.075, \freq, freq*0.74,
-						\freqskew, 1000, \amp, 0.20 * ~main.birdAmp,
+						\freqskew, 1000,
+						\amp, 0.20 * ~main.birdAmp * randAmp,
 						\freqenv, yellow_down,
 						\ampenv, main_amp, \t_gate, 1, \pan, pan,
 						\out, ~main.posBus
@@ -259,14 +269,17 @@ Pdef(\yellow_warbler,
 					yel_t[6].wait;
 					Synth("billbird", [
 						\dur, 0.075, \freq, freq*0.74,
-						\freqskew, 800, \amp, 0.15, \freqenv, yellow_down,
+						\freqskew, 800,
+						\amp, 0.15 * ~main.birdAmp * randAmp,
+						\freqenv, yellow_down,
 						\ampenv, main_amp, \t_gate, 1, \pan, pan,
 						\out, ~main.posBus
 					]);
 					yel_t[7].wait;
 					Synth("billbird", [
 						\dur, 0.075, \freq, freq*0.74,
-						\freqskew, 800, \amp, 0.15 * ~main.birdAmp,
+						\freqskew, 800,
+						\amp, 0.15 * ~main.birdAmp * randAmp,
 						\freqenv, yellow_down,
 						\ampenv, main_amp, \t_gate, 1, \pan, pan,
 						\out, ~main.posBus
@@ -274,7 +287,8 @@ Pdef(\yellow_warbler,
 					yel_t[8].wait;
 					Synth("billbird", [
 						\dur, 0.2, \freq, freq*0.74,
-						\freqskew, 2000, \amp, 0.2 * ~main.birdAmp,
+						\freqskew, 2000,
+						\amp, 0.2 * ~main.birdAmp * randAmp,
 						\freqenv, yellow_last,
 						\ampenv, swirl_amp, \t_gate, 1, \pan, pan,
 						\out, ~main.posBus
@@ -314,7 +328,8 @@ Pdef(\orchard_oriele,
 			|event|
 			if( ((s.peakCPU < ~main.maxPeakCPU) && (s.avgCPU < ~main.maxAvgCPU)), {
 				var freq = event[\freq];
-				var pan = rrand(-1, 1);
+				var pan = rrand(-1.0, 1.0);
+				var randAmp = rand(1.0);
 
 				var oriup, oriup_bill = [0, 0, 1, 1,];
 				var oridwn, oridwn_bill = [0, 1, 1, 0];
@@ -352,23 +367,23 @@ Pdef(\orchard_oriele,
 
 					Synth("billbird", [
 						\dur, 0.03, \freq, freq*1.85, \freqskew, 100,
-						\amp, 0.5 * ~main.birdAmp,
+						\amp, 0.5 * ~main.birdAmp * randAmp,
 						\freqenv, oridwn, \ampenv, main_amp,
 						\t_gate, 1, \pan, pan,
 						\out, ~main.posBus
 					]);
 					ori_t[1].wait;
 					Synth("billbird", [
-						\dur, 0.05, \freq, freq*1.25, \freqskew,
-						1000, \amp, 0.1 * ~main.birdAmp,
+						\dur, 0.05, \freq, freq*1.25, \freqskew, 1000,
+						\amp, 0.1 * ~main.birdAmp * randAmp,
 						\freqenv, oriup, \ampenv, main_amp,
 						\t_gate, 1, \pan, pan,
 						\out, ~main.posBus
 					]);
 					ori_t[2].wait;
 					Synth("billbigbird", [
-						\dur, 0.1, \freq, freq, \freqskew,
-						800, \amp, 0.2 * ~main.birdAmp,
+						\dur, 0.1, \freq, freq, \freqskew, 800,
+						\amp, 0.2 * ~main.birdAmp * randAmp,
 						\freqenv, oriupdwna, \ampenv, main_amp,
 						\partialNumbers, [1, 2, 3],
 						\partialAmps, [1, 0.2, 0.5],
@@ -377,8 +392,8 @@ Pdef(\orchard_oriele,
 					]);
 					ori_t[3].wait;
 					Synth("billbird", [
-						\dur, 0.3, \freq, freq*1.95, \freqskew,
-						1200, \amp, 0.1 * ~main.birdAmp,
+						\dur, 0.3, \freq, freq*1.95, \freqskew, 1200,
+						\amp, 0.1 * ~main.birdAmp * randAmp,
 						\freqenv, oridwn, \ampenv, main_amp,
 						\t_gate, 1, \pan, pan,
 						\out, ~main.posBus
@@ -386,7 +401,8 @@ Pdef(\orchard_oriele,
 					ori_t[4].wait;
 					Synth("billbigbird", [
 						\dur, 0.21, \freq, freq,
-						\freqskew, 1200, \amp, 0.15 * ~main.birdAmp,
+						\freqskew, 1200,
+						\amp, 0.15 * ~main.birdAmp * randAmp,
 						\freqenv, oribiga,
 						\ampenv, main_amp,
 						\partialNumbers, [1, 2],
@@ -395,16 +411,16 @@ Pdef(\orchard_oriele,
 					]);
 					ori_t[5].wait;
 					Synth("billbird", [
-						\dur, 0.05, \freq, freq*2.1, \freqskew,
-						1000, \amp, 0.1 * ~main.birdAmp,
+						\dur, 0.05, \freq, freq*2.1, \freqskew, 1000,
+						\amp, 0.1 * ~main.birdAmp * randAmp,
 						\freqenv, oridwn,
 						\ampenv, main_amp, \t_gate, 1, \pan, pan,
 						\out, ~main.posBus
 					]);
 					ori_t[6].wait;
 					Synth("billbigbird", [
-						\dur, 0.1, \freq, freq, \freqskew,
-						1000, \amp, 0.25 * ~main.birdAmp,
+						\dur, 0.1, \freq, freq, \freqskew, 1000,
+						\amp, 0.25 * ~main.birdAmp * randAmp,
 						\freqenv, orimid, \ampenv, main_amp,
 						\partialNumbers, [1, 2],
 						\partialAmps, [1, 0.05], \t_gate, 1, \pan, pan,
@@ -412,8 +428,8 @@ Pdef(\orchard_oriele,
 					]);
 					ori_t[7].wait;
 					Synth("billbigbird", [
-						\dur, 0.1, \freq, freq, \freqskew,
-						1000, \amp, 0.25 * ~main.birdAmp,
+						\dur, 0.1, \freq, freq, \freqskew, 1000,
+						\amp, 0.25 * ~main.birdAmp * randAmp,
 						\freqenv, orimid, \ampenv, main_amp,
 						\partialNumbers, [1, 2],
 						\partialAmps, [1, 0.05], \t_gate, 1, \pan, pan,
@@ -421,37 +437,41 @@ Pdef(\orchard_oriele,
 					]);
 					ori_t[8].wait;
 					Synth("billbird", [
-						\dur, 0.1, \freq, freq*1.15, \freqskew,
-						3200, \amp, 0.1 * ~main.birdAmp,
+						\dur, 0.1, \freq, freq*1.15, \freqskew, 3200,
+						\amp, 0.1 * ~main.birdAmp * randAmp,
 						\freqenv, oriupdwnb,
 						\ampenv, oriamp, \t_gate, 1, \pan, pan,
 						\out, ~main.posBus
 					]);
 					ori_t[9].wait;
 					Synth("billbird", [
-						\dur, 0.03, \freq, freq*0.9, \freqskew,
-						300, \amp, 0.05 * ~main.birdAmp, \freqenv, oriup,
+						\dur, 0.03, \freq, freq*0.9, \freqskew, 300,
+						\amp, 0.05 * ~main.birdAmp * randAmp,
+						\freqenv, oriup,
 						\ampenv, main_amp, \t_gate, 1, \pan, pan,
 						\out, ~main.posBus
 					]);
 					ori_t[10].wait;
 					Synth("billbird", [
-						\dur, 0.03, \freq, freq*1.1, \freqskew,
-						100, \amp, 0.4 * ~main.birdAmp, \freqenv, oridwn,
+						\dur, 0.03, \freq, freq*1.1, \freqskew, 100,
+						\amp, 0.4 * ~main.birdAmp * randAmp,
+						\freqenv, oridwn,
 						\ampenv, main_amp, \t_gate, 1, \pan, pan,
 						\out, ~main.posBus
 					]);
 					ori_t[11].wait;
 					Synth("billbird", [
-						\dur, 0.07, \freq, freq*1.25, \freqskew,
-						2000, \amp, 0.15 * ~main.birdAmp, \freqenv, oriupdwnb,
+						\dur, 0.07, \freq, freq*1.25, \freqskew, 2000,
+						\amp, 0.15 * ~main.birdAmp * randAmp,
+						\freqenv, oriupdwnb,
 						\ampenv, oriamp, \t_gate, 1, \pan, pan,
 						\out, ~main.posBus
 					]);
 					ori_t[12].wait;
 					Synth("billbigbird", [
 						\dur, 0.2, \freq, freq*1.2,
-						\freqskew, 1200, \amp, 0.25 * ~main.birdAmp,
+						\freqskew, 1200,
+						\amp, 0.25 * ~main.birdAmp * randAmp,
 						\freqenv, oridwnup,
 						\ampenv, main_amp,
 						\partialNumbers, [1, 2],
@@ -460,16 +480,16 @@ Pdef(\orchard_oriele,
 					]);
 					ori_t[13].wait;
 					Synth("billbird", [
-						\dur, 0.02, \freq, freq*1.1, \freqskew,
-						3000, \amp, 0.4 * ~main.birdAmp,
+						\dur, 0.02, \freq, freq*1.1, \freqskew, 3000,
+						\amp, 0.4 * ~main.birdAmp * randAmp,
 						\freqenv, oriup, \ampenv, main_amp,
 						\t_gate, 1, \pan, pan,
 						\out, ~main.posBus
 					]);
 					ori_t[14].wait;
 					Synth("billbird", [
-						\dur, 0.02, \freq, freq*1.1, \freqskew,
-						3000, \amp, 0.4 * ~main.birdAmp,
+						\dur, 0.02, \freq, freq*1.1, \freqskew, 3000,
+						\amp, 0.4 * ~main.birdAmp * randAmp,
 						\freqenv, oriup,
 						\ampenv, main_amp, \t_gate, 1, \pan, pan,
 						\out, ~main.posBus
@@ -477,7 +497,8 @@ Pdef(\orchard_oriele,
 					ori_t[15].wait;
 					Synth("billbigbird", [
 						\dur, 0.17, \freq, freq,
-						\freqskew, 1000, \amp, 0.2 * ~main.birdAmp,
+						\freqskew, 1000,
+						\amp, 0.2 * ~main.birdAmp * randAmp,
 						\freqenv, oriupdwna,
 						\ampenv, main_amp,
 						\partialNumbers, [1, 2],
@@ -516,7 +537,7 @@ Pdef(\cassins_kingbird,
 			|event|
 			if( ((s.peakCPU < ~main.maxPeakCPU) && (s.avgCPU < ~main.maxAvgCPU)), {
 				var freq = event[\freq];
-				var pan = rrand(-1, 1);
+				var pan = rrand(-1.0, 1.0);
 
 				var kingfirst_bill = [0.00, 0.30, 0.45, 1.00, 0.90, 0.10, 1.00, 0.0];
 				var kingsecond_bill = [0.00, 0.00, 0.02, 0.50, 0.04, 0.00, 0.06, 0.55,

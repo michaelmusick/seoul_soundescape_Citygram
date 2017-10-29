@@ -20,11 +20,9 @@ Notes:
 o = Server.default.options;
 o.memSize = 2**19;
 
+// post verbosity
 o.verbosity = -2;
 
-// o.numInputBusChannels  = 1;
-// o.numOutputBusChannels = 1;
-// o.numBuffers = 4096;
 
 ~platform = \rpi;
 Platform.case(

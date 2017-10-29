@@ -4,22 +4,26 @@
 // Variables for All
 // =====================================================
 
-TempoClock.default.tempo = 88/60;
+TempoClock.default.tempo = 96/60;
 
-Pdef(\scale, Prand([0,3,4,5,7], inf));
-
+Pdef(\scale, Prand([0,2,4,5,7], inf));
+/*
+Pdef(\scale, Prand([0,2,4,7], inf));
+Pdef(\scale, Prand([0,2,4,5,7], inf));
+Pdef(\scale, Prand([0, 2, 4, 5, 7, 9, 11], inf));
+*/
 
 // =====================================================
 // Some Bird Variables
 // =====================================================
 
 // main amp for mix
-~main.birdAmp = -18.dbamp;
+~main.birdAmp = -20.dbamp;
 
 // duration pdef
 Pdef(\bird_durs, Pwrand(
-	[ 1,   2,   4,   8,   16,  32  ],
-	[ 0.1, 0.1, 0.3, 1.1, 2.0, 1.0 ].normalizeSum,
+	[ 1,   2,   4,   8,   16,  32, 64, 96  ],
+	[ 0.1, 0.1, 0.3, 1.1, 2.0, 1.7, 2.0, 1 ].normalizeSum,
 	inf)
 );
 
@@ -36,6 +40,7 @@ Pdef(\woodChime_db, Pbrown( -18, -6, 3, inf));
 (
 Pdef(\chimePatterns,
 	Pwrand([
+		Pseq( [1/4, 1/4, 1/2, 1/4, 1/2, 1/4], 1 ), //0
 		Pseq( [1, 1/2, 1/4, 1/4, 2], 1 ), //1
 		Pseq( [1, 1/4, 1/4, 1/4, 1/4, 1], 1 ), //2
 		Pseq( [1, 1/2, 1/4, 1/4, 2], 1 ), //3
@@ -51,9 +56,14 @@ Pdef(\chimePatterns,
 		Pseq( [8], 1 ), //13
 		Pseq( [16], 1 ), //14
 		Pseq( [32], 1 ), //15
+		Pseq( [40], 1 ), //16
+		Pseq( [48], 1 ), //17
+		Pseq( [56], 1 ), //18
+		Pseq( [64], 1 ), //19
 	],
 	// Weights
 	[
+		1,    // 0
 		1,    // 1
 		1,    // 2
 		1,    // 3
@@ -68,7 +78,11 @@ Pdef(\chimePatterns,
         20,   // 12
         25,   // 13
         20,   // 14
-        10    // 15
+        10,   // 15
+		10,   // 16
+		10,   // 17
+		10,   // 18
+		10,   // 19
     ].normalizeSum,
 	inf
 	)

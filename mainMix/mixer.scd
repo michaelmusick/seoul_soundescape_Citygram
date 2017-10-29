@@ -13,8 +13,8 @@ Notes: Handles the mixing and managment of the three voice layers
 **************************************************************/
 
 
-~main.negRange = [0,0.3];
-~main.neutRange = [0.15,0.5];
+~main.negRange = [0,0.35];
+~main.neutRange = [0.15,0.6];
 ~main.posRange = [0.5,1.0];
 
 // memory length, in mins
@@ -36,7 +36,7 @@ OSCdef(\updateMix, {
 
 	if( ~cgGroupData[ptr][\activeRSDs].notNil, {
 		activeRSDs = ~cgGroupData[ptr][\activeRSDs];
-
+		~main.activeRSDs = activeRSDs;
 
 		~main.rsdHist.put(~main.rsdHistIdx, activeRSDs);
 
@@ -61,18 +61,20 @@ OSCdef(\updateMix, {
 
 		// ADJUST MIX FOR POS?NEUT?NEG
 		mixVal = activeRSDs.linlin(~main.minRSDs, ~main.maxRSDs, 0, 1);
-
+		~main.mixVal = mixVal;
 
 		pos  = mixVal.linlin(
 			~main.posRange[0], ~main.posRange[1],
 			0,                 1,
 			\minmax
 		);
+		~main.posLevel = pos;
 		neg  = mixVal.linlin(
 			~main.negRange[0], ~main.negRange[1],
 			1,                 0,
 			\minmax
 		);
+		~main.negLevel = neg;
 		neut = (
 			mixVal.clip(
 				~main.neutRange[0], ~main.neutRange[1]
@@ -80,6 +82,7 @@ OSCdef(\updateMix, {
 				~main.neutRange[0], ~main.neutRange[1],
 				0,                  1
 		) * pi ).sin.clip(0,1);
+		~main.neutLevel = neut;
 		~main.mainOut.set(\posLevel, pos, \neutLevel, neut, \negLevel, neg);
 
 		// ("active RSDs: " + activeRSDs).postln;
@@ -104,13 +107,13 @@ NetAddr.localAddr
 // "starting main out".postln;
 ~main.mainOut = SynthDef(\mixerSynth, {
 	arg neutIn, posIn, negIn, out = 0,
-	lagTime = 2,
+	lagTime = 1,
 	neutLevel = 0.3,
 	posLevel = 0.3,
 	negLevel = 0.3,
 	posLev_ = 2,
 	neutLev_ = 2,
-	negLev_ = -3.dbamp;
+	negLev_ = 1;
 
 	var posSig, neutSig, negSig, mainSig;
 
@@ -154,9 +157,16 @@ addAction: \addToTail
 
 /*
 ~main.mainOut.free
+~main.mainOut.set(\posLevel, 1, \negLevel, 0, \neutLevel, 0)
 ~main.mainOut.set(\posLevel, 0, \negLevel, 0, \neutLevel, 1)
+~main.mainOut.set(\posLevel, 0, \negLevel, 1, \neutLevel, 0)
 ~main.mainOut.set(\posLev_)
 
-
-
+~main.maxRSDs.postln;
+~main.minRSDs.postln;
+~main.activeRSDs.postln;
+~main.mixVal.postln;
+~main.posLevel.postln;
+~main.neutLevel.postln;
+~main.negLevel.postln;
 */

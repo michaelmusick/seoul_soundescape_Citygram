@@ -109,17 +109,22 @@ SynthDef.new("myReverb",
 	var delta, freqRand, mpy = 1;
 
 	loop {
-		delta = rrand(4.0, 10);
+		delta = rrand(4.0, 20.0);
 		delta.yield;
 
 		freqRand = 1000.0.rand + 20.0;
 		// "Gliss trigger ".post; delta.postln;
 		//~synthGliss.set("impulseFreq", 0.001+(1.0.rand)/4);
-
-		Synth.before(~synthReverb, "sinGliss", [
-			effectBus: ~bussMix, outBus: ~main.neutralBus,
-			freq: freqRand, freqDecay: freqRand
-		]);
+		if( (
+			(s.peakCPU < ~main.maxPeakCPU) &&
+			(s.avgCPU < ~main.maxAvgCPU)
+		),
+		{
+			Synth.before(~synthReverb, "sinGliss", [
+				effectBus: ~bussMix, outBus: ~main.neutralBus,
+				freq: freqRand, freqDecay: freqRand
+			]);
+		});
 	}
 });
 
