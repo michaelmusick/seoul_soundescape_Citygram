@@ -133,6 +133,9 @@ NetAddr.localAddr
 
 	// any signal processing for mastering, goes here
 
+	mainSig = HPF.ar(mainSig, 130);
+
+
 	mainSig = Limiter.ar( mainSig, 0.99, 0.01 );
 
 	Out.ar( out, mainSig );
