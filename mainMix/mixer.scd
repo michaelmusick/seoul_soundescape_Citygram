@@ -110,7 +110,7 @@ NetAddr.localAddr
 	negLevel = 0.3,
 	posLev_ = 2,
 	neutLev_ = 2,
-	negLev_ = 1;
+	negLev_ = -3.dbamp;
 
 	var posSig, neutSig, negSig, mainSig;
 
