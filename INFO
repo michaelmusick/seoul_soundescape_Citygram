@@ -1,0 +1,8 @@
+# The following should be placed in .jackdrc settings file
+usr/bin/jackd -r -dalsa -dhw:0 -r44100 -p1024 -n4 -P
+
+
+
+# The following should be placed in the SuperCollide startup file
+Located: ~/.config/SuperCollider/startup.scd
+("/home/pi/seoul_CG/start.scd").loadPaths;
