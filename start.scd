@@ -44,7 +44,7 @@ if( ~platform == \rpi, {
 	s.boot;
 	// "waiting 30 seconds for things to calm down\n\n".postln;
 	if(~platform != \osx, {
-		30.wait;
+		10.wait;
 	});
 	s.doWhenBooted({
 

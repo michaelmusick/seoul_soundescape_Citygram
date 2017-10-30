@@ -144,7 +144,7 @@ NetAddr.localAddr
 		mainSig = LPF.ar( mainSig, freq: 120 );
 	});
 
-	mainSig = mainSig * 3.dbamp;
+	mainSig = mainSig * 12.dbamp;
 
 
 	mainSig = Limiter.ar( mainSig, 0.99, 0.01 );
